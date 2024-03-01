@@ -39,4 +39,11 @@ public class TDD{
         Pagamento pagamento = new Pagamento(400.00, "21/03/2024", "boleto");
         assertEquals(400.00, pagamento.getValuePaid(), 0.001);
     }
+
+    @Test
+    public void testGetType(){
+        Pagamento pagamento = new Pagamento(400.00, "21/03/2024", "boleto");
+        assertEquals("boleto", pagamento.getType);
+    }
+
 }
