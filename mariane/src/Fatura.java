@@ -25,8 +25,8 @@ public class Fatura {
         return totalFatura;
     }
 
-    public void isPaied(){
-        this.paied = true;
+    public boolean isPaid(){
+        return this.paied = true;
     }
 
     public boolean getFaturaStatus(){

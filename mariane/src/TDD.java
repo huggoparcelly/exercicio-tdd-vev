@@ -61,19 +61,15 @@ public class TDD{
 
     @Test
     public void testProcessadorBoletos(){
-        Fatura fatura = new Fatura("21/03/2024", 300.00, "Mariane", false);
+        Fatura fatura = new Fatura("21/03/2024", 3000.00, "Mariane", false);
        
         List<Boleto> boletos = new ArrayList<>();
         boletos.add(new Boleto(9844, "21/03/2024", 444.90));
         boletos.add(new Boleto(9890, "22/03/2024", 1500.00));
  
- 
         ProcessadorBoletos processador = new ProcessadorBoletos();
         processador.processarBoletos(fatura, boletos);
  
         assertEquals(2, fatura.getPayments().size());
-
     }
- 
-
 }
