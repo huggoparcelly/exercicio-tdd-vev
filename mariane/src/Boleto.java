@@ -13,5 +13,9 @@ public class Boleto {
         return boletoCode;
     }
 
+    public double getTotalPaid(){
+        return totalPaid;
+    }
+
 
 }
