@@ -33,4 +33,10 @@ public class TDD{
 
 
     }
+
+    @Test
+    public void testGetPagamento(){
+        Pagamento pagamento = new Pagamento(400.00, "21/03/2024", "boleto");
+        assertEquals(500.00, pagamento.getValuePaied());
+    }
 }
