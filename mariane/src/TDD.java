@@ -21,8 +21,8 @@ public class TDD{
     }
 
     @Test
-    public void testGetClientName(){
-        Boleto boleto = new Boleto(9876, "21/03/2024", 1444.90);
-        assertEquals("Mariane", boleto.getClientName());
+    public void testGetTotalFatura(){
+        Fatura fatura = new Fatura("21/03/2024", 1500.00, "Mariane");
+        assertEquals("Mariane", fatura.getTotalFatura());
     }
 }
