@@ -43,7 +43,7 @@ public class TDD{
     @Test
     public void testGetType(){
         Pagamento pagamento = new Pagamento(400.00, "21/03/2024", "boleto");
-        assertEquals("boleto", pagamento.getType);
+        assertEquals("boleto", pagamento.getType());
     }
 
 }

@@ -13,4 +13,8 @@ public class Pagamento {
         return valuePaid;
     }
 
+    public String getType(){
+        return type;
+    }
+
 }
