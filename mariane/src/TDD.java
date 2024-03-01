@@ -25,4 +25,12 @@ public class TDD{
         Fatura fatura = new Fatura("21/03/2024", 1500.00, "Mariane");
         assertEquals(1500.00, fatura.getTotalFatura(), 0.001);
     }
+
+    @Test
+    public void testFaturaPaid(){
+        Fatura fatura = new Fatura("21/03/2024", 1500.00, "Mariane", true);
+        assertEquals(true, getFaturaStatus());
+
+
+    }
 }
