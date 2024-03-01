@@ -1,6 +1,8 @@
-public class TDD {
+import static org.junit.Assert.*;
 
-    public Boleto testGetBoleto(){
+public class TDD{
+
+    public void testGetBoleto(){
         int boletoCodeExpected = 9876;
         String date = "21/03/2024";
         double totalPaid = 1444.90;
@@ -11,4 +13,8 @@ public class TDD {
 
         assertEquals(boletoCodeExpected, boleto.getBoletoCode());
     }
+
+
+
+   
 }
