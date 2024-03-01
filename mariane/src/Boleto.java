@@ -3,8 +3,8 @@ public class Boleto {
     private String date;
     private double totalPaid;
 
-    public Boleto(int boledoCode, String date, double totalPaid){
-        this.boletoCode = boledoCode;
+    public Boleto(int boletoCode, String date, double totalPaid){
+        this.boletoCode = boletoCode;
         this.date = date;
         this.totalPaid = totalPaid;
     }

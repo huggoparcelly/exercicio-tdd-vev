@@ -19,8 +19,8 @@ public class TDD{
         double totalFatura = 1500.00;
         String clientNameExpected = "Mariane";
 
-        Fatura fatura = new Fatura(date, totalFatura, clientName);
-        assertArrayEquals(clientNameExpected, fatura.getClientName());
+        Fatura fatura = new Fatura(date, totalFatura, clientNameExpected);
+        assertEquals(clientNameExpected, fatura.getFatura());
 
     }
    
