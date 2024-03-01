@@ -2,7 +2,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Voos {
+public class Voo {
 
   LocalDate data;
   LocalTime horarioSaida;

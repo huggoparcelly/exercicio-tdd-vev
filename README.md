@@ -45,7 +45,7 @@ Como dito anteriormente, caso a soma de todos os boletos seja igual ou ultrapass
 Deve-se implementar um sistema que permita que os usuários pesquisem e reservem voos para destinos de sua escolha.
 
 O sistema deve fornecer informações sobre voos disponíveis, datas, horários, preços e permitir que os usuários selecionem e reservem voos.
-- [ ] Criar entidade ```Voos``` com atributos
+- [ ] Criar entidade ```Voo``` com atributos
 ```
     datas;
     horários;
