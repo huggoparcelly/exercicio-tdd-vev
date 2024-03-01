@@ -13,8 +13,11 @@ public class Fatura {
         return clientName;
     }
 
-    
+    public double getTotalFatura(){
+        return totalFatura;
+    }
 
+ 
 
 
 }
