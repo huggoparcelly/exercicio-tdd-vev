@@ -40,24 +40,24 @@ public class TDD{
 
     @Test
     public void testGetPagamento(){
-        Pagamento pagamento = new Pagamento(400.00, "21/03/2024", "BOLETO");
-        assertEquals(400.00, pagamento.getValuePaid(), 0.001);
+        Pagamento payment = new Pagamento(400.00, "21/03/2024", "BOLETO");
+        assertEquals(400.00, payment.getValuePaid(), 0.001);
     }
 
     @Test
     public void testGetType(){
-        Pagamento pagamento = new Pagamento(400.00, "21/03/2024", "BOLETO");
-        assertEquals("boleto", pagamento.getType());
+        Pagamento payment = new Pagamento(400.00, "21/03/2024", "BOLETO");
+        assertEquals("boleto", payment.getType());
     }
 
     @Test
     public void testAddPayment(){
         Fatura fatura = new Fatura("01/03/2024", 1500.00, "Mariane", false);
-        Pagamento pagamento = new Pagamento(400.00, "21/03/2024", "BOLETO");
+        Pagamento payment = new Pagamento(400.00, "21/03/2024", "BOLETO");
 
-        fatura.addPayment(pagamento);
-        assertEquals(1, fatura.getPagamentos().size());
-        assertEquals(pagamento, fatura.getPagamentos().get(0));
+        fatura.addPayment(payment);
+        assertEquals(1, fatura.getPayments().size());
+        assertEquals(payment, fatura.getPayments().get(0));
 
     }
 
