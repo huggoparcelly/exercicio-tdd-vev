@@ -17,5 +17,9 @@ public class Boleto {
         return totalPaid;
     }
 
+    public String getDate(){
+        return date;
+    }
+
 
 }
