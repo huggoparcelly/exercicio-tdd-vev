@@ -86,6 +86,17 @@ public class SistemaReservaDeVooServiceTest {
         assertFalse(voosDisponiveis.contains(voo02));
     }
 
+    @Test
+    public void testaBuscaDeVoosPorFiltroOrigemInexistente() {
+        String origem = "Cidade Grande";
+        criarVoo(voo01);
+
+        List<Voo> voos = List.of(voo01);
+        SistemaService sistemaService = new SistemaService(voos);
+
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(origem);
+        assertTrue(voosDisponiveis.isEmpty());
+    }
 
     private void criarVoo(Voo voo) {
         voo.setData(LocalDate.now());
