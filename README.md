@@ -45,7 +45,7 @@ Como dito anteriormente, caso a soma de todos os boletos seja igual ou ultrapass
 Deve-se implementar um sistema que permita que os usuários pesquisem e reservem voos para destinos de sua escolha.
 
 O sistema deve fornecer informações sobre voos disponíveis, datas, horários, preços e permitir que os usuários selecionem e reservem voos.
-- [ ] Criar entidade ```Voo``` com atributos
+- [X] Criar entidade ```Voo``` com atributos
 ```
     datas;
     horários;
@@ -54,17 +54,9 @@ O sistema deve fornecer informações sobre voos disponíveis, datas, horários,
     destino;
     lugares disponiveis;
 ```
-- [ ] Criar método ```getVooDisponivel``` que retorna os detalhes de um voo disponível
-```
-    datas,
-    horários,
-    preços
-```
-- [ ] Criar iteração para usuário ```selecionar e reservar``` um voo disponível
-- [ ] Criar método ```reservarVoo```
 
 O sistema deve permitir que os usuários pesquisem voos com base em critérios como origem, destino, data e número de passageiros.
-- [ ] Criar um método ```findVoos``` filtrando os voos com base nos parâmetros
+- [X] Criar um método ```findVoos``` filtrando os voos com base nos parâmetros
 ```
     origem,
     destino,
@@ -73,7 +65,7 @@ O sistema deve permitir que os usuários pesquisem voos com base em critérios c
 ```
 
 O sistema deve exibir uma lista de voos disponíveis com informações detalhadas, incluindo origem, destino, horário, preço e lugares disponíveis.
-- [ ] Criar método ```getVoosDisponiveis``` que retorna info detalhada de todos os voos
+- [X] Criar método ```getVoosDisponiveis``` que retorna info detalhada de todos os voos
 ```
     datas;
     horários;
@@ -84,14 +76,16 @@ O sistema deve exibir uma lista de voos disponíveis com informações detalhada
 ```
 
 Os usuários devem ser capazes de selecionar um voo e reservá-lo, inserindo detalhes como nome, número de passageiros e informações de contato.
-- [ ] Criar entidade ```Reserva``` com atributos
+- [ ] Criar iteração para usuário ```selecionar e reservar``` um voo disponível
+
+- [X] Criar entidade ```Reserva``` com atributos
 ```
     código de reserva,
     nome,
     numero de passageiros,
     informações de contato
 ```
-- [ ] Criar método de ```criar reserva```
+- [ ] Criar método ```reservarVoo```
 
 Os usuários devem poder cancelar uma reserva de voo, fornecendo o código de reserva ou identificação pessoal.
 - [ ] Criar método de ```cancelamento de reserva``` feito pelo ```código``` ou ```identificação pessoal``` 
