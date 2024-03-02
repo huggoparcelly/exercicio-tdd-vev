@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Voo {
 
-  private UUID id;
+  private final UUID id;
   private LocalDate data;
   private LocalTime horarioSaida;
   private LocalTime horarioChegada;

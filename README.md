@@ -73,7 +73,7 @@ O sistema deve permitir que os usuários pesquisem voos com base em critérios c
 ```
 
 O sistema deve exibir uma lista de voos disponíveis com informações detalhadas, incluindo origem, destino, horário, preço e lugares disponíveis.
-- [ ] Criar método ```getAllVoosDisponiveis``` que retorna info detalhada de todos os voos
+- [ ] Criar método ```getVoosDisponiveis``` que retorna info detalhada de todos os voos
 ```
     datas;
     horários;

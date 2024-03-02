@@ -13,7 +13,7 @@ public class SistemaService {
         return voosDisponiveis;
     }
 
-    public void setVoosDisponiveis(List<Voo> voosDisponiveis) {
-        this.voosDisponiveis = voosDisponiveis;
+    public List<Voo> buscarVoosByFiltro(String filtro) {
+        return new ArrayList<>();
     }
 }

@@ -6,8 +6,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SistemaReservaDeVooServiceTest {
@@ -54,6 +56,22 @@ public class SistemaReservaDeVooServiceTest {
         assertTrue(voosDispononiveis.contains(voo02));
         assertTrue(voosDispononiveis.get(0).detalhesVoo().contains("Campina Grande - PB"));
     }
+
+    @Test
+    public void testaBuscaDeVoosPorFiltroComListaVazia() {
+        String filtro = "Campina Grande - PB";
+        SistemaService sistemaService = new SistemaService(new ArrayList<>());
+        assertTrue(sistemaService.buscarVoosByFiltro(filtro).isEmpty());
+    }
+
+    /* Todo
+        busca por origem
+        busca por destino
+        busca por data
+        busca por numero passageiros
+
+    */
+
 
     private void criarVoo(Voo voo) {
         voo.setData(LocalDate.now());
