@@ -71,6 +71,20 @@ public class SistemaReservaDeVooServiceTest {
         busca por numero passageiros
 
     */
+    @Test
+    public void testaBuscaDeVoosPorFiltroOrigemExistente() {
+        String origem = "Campina Grande - PB";
+        criarVoo(voo01);
+
+        List<Voo> voos = List.of(voo01);
+        SistemaService sistemaService = new SistemaService(voos);
+
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(origem);
+        assertFalse(voosDisponiveis.isEmpty());
+        assertEquals(voosDisponiveis.size(), 1);
+        assertTrue(voosDisponiveis.contains(voo01));
+        assertFalse(voosDisponiveis.contains(voo02));
+    }
 
 
     private void criarVoo(Voo voo) {

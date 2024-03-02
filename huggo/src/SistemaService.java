@@ -14,6 +14,8 @@ public class SistemaService {
     }
 
     public List<Voo> buscarVoosByFiltro(String filtro) {
-        return new ArrayList<>();
+        return this.getVoosDisponiveis().stream()
+                .filter(voo -> voo.detalhesVoo().contains(filtro))
+                .toList();
     }
 }
