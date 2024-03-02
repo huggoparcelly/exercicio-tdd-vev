@@ -1,5 +1,7 @@
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class SistemaService {
 
@@ -20,6 +22,9 @@ public class SistemaService {
     }
 
     public Voo buscaVooPorId(UUID id) {
-        return new Voo();
+         return this.voosDisponiveis.stream()
+                 .filter(v -> v.getId().equals(id))
+                 .findFirst()
+                 .orElseThrow();
     }
 }

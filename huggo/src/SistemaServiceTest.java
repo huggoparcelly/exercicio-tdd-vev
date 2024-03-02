@@ -159,9 +159,10 @@ public class SistemaServiceTest {
         SistemaService sistemaService = new SistemaService(voos);
 
         Voo vooRetornado = sistemaService.buscaVooPorId(voo01.getId());
-        System.err.println(vooRetornado.detalhesVoo());
         assertEquals(vooRetornado, voo01);
     }
+
+    // Todo testar comportamento com lista vazia
 
     private void criarVoo(Voo voo) {
         voo.setData(LocalDate.now());
