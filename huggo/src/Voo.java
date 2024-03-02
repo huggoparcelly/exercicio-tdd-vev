@@ -80,9 +80,9 @@ public class Voo {
 
   public String detalhesVoo() {
     return "Voo " + id +
-            "\nData:" + data + ",\n" +
-            "Horario Saida:" + horarioSaida + ",\n" +
-            "Horario Chegada:" + horarioChegada +
+            "\nData: " + data + ",\n" +
+            "Horario Saida: " + horarioSaida + ",\n" +
+            "Horario Chegada: " + horarioChegada +
             "Valor: " + valor + ",\n" +
             "Origem: " + origem + '\'' + ",\n" +
             "Destino: " + destino + '\'' + ",\n" +

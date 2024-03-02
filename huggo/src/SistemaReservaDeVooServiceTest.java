@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SistemaReservaDeVooServiceTest {
@@ -64,14 +63,9 @@ public class SistemaReservaDeVooServiceTest {
         assertTrue(sistemaService.buscarVoosByFiltro(filtro).isEmpty());
     }
 
-    /* Todo
-
-        busca por numero passageiros
-
-    */
     @Test
     public void testaBuscaDeVoosPorFiltroOrigemExistente() {
-        String origem = "Campina Grande - PB";
+        String origem = "Origem: Campina Grande - PB";
         criarVoo(voo01);
 
         List<Voo> voos = List.of(voo01);
@@ -87,7 +81,7 @@ public class SistemaReservaDeVooServiceTest {
 
     @Test
     public void testaBuscaDeVoosPorFiltroOrigemInexistente() {
-        String origem = "Cidade Grande";
+        String origem = "Origem: Cidade Grande";
         criarVoo(voo01);
 
         List<Voo> voos = List.of(voo01);
@@ -99,7 +93,7 @@ public class SistemaReservaDeVooServiceTest {
 
     @Test
     public void testaBuscaDeVoosPorFiltroDataExistente() {
-        String data = LocalDate.now().toString();
+        String data = "Data: " + LocalDate.now();
         criarVoo(voo01);
         criarVoo(voo02);
         voo02.setData(LocalDate.now().minusDays(2));
@@ -117,13 +111,43 @@ public class SistemaReservaDeVooServiceTest {
 
     @Test
     public void testaBuscaDeVoosPorFiltroDataInexistente() {
-        String data = LocalDate.now().minusDays(2).toString();
+        String data = "Data: " + LocalDate.now().minusDays(2);
         criarVoo(voo01);
 
         List<Voo> voos = List.of(voo01);
         SistemaService sistemaService = new SistemaService(voos);
 
         List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(data);
+        assertNotEquals(voosDisponiveis, voos);
+        assertTrue(voosDisponiveis.isEmpty());
+    }
+
+    @Test
+    public void testaBuscaDeVoosPorFiltroNumeroAssentosExistente() {
+        String numeroAssentos = "Assentos Disponiveis: 10";
+        criarVoo(voo01);
+
+        List<Voo> voos = List.of(voo01);
+        SistemaService sistemaService = new SistemaService(voos);
+
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(numeroAssentos);
+        assertEquals(voosDisponiveis, voos);
+        assertFalse(voosDisponiveis.isEmpty());
+        assertEquals(voosDisponiveis.size(), 1);
+        assertTrue(voosDisponiveis.contains(voo01));
+        assertFalse(voosDisponiveis.contains(voo02));
+    }
+
+    @Test
+    public void testaBuscaDeVoosPorFiltroNumeroAssentosInexistente() {
+        String numeroAssentos = "Assentos Disponiveis: 5";
+        criarVoo(voo01);
+
+        List<Voo> voos = List.of(voo01);
+        SistemaService sistemaService = new SistemaService(voos);
+
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(numeroAssentos);
+        assertNotEquals(voosDisponiveis, voos);
         assertTrue(voosDisponiveis.isEmpty());
     }
 
