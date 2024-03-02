@@ -80,13 +80,13 @@ public class Voo {
 
   public String detalhesVoo() {
     return "Voo " + id +
-            "\ndata=" + data + ",\n" +
-            "horarioSaida=" + horarioSaida + ",\n" +
-            "horarioChegada=" + horarioChegada +
-            "valor=" + valor + ",\n" +
-            "origem='" + origem + '\'' + ",\n" +
-            "destino='" + destino + '\'' + ",\n" +
-            "assentosDisponiveis=" + assentosDisponiveis;
+            "\nData:" + data + ",\n" +
+            "Horario Saida:" + horarioSaida + ",\n" +
+            "Horario Chegada:" + horarioChegada +
+            "Valor: " + valor + ",\n" +
+            "Origem: " + origem + '\'' + ",\n" +
+            "Destino: " + destino + '\'' + ",\n" +
+            "Assentos Disponiveis: " + assentosDisponiveis;
   }
 }
 

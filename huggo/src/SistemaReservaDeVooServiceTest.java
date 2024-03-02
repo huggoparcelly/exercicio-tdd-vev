@@ -65,9 +65,7 @@ public class SistemaReservaDeVooServiceTest {
     }
 
     /* Todo
-        busca por origem
-        busca por destino
-        busca por data
+
         busca por numero passageiros
 
     */
@@ -80,6 +78,7 @@ public class SistemaReservaDeVooServiceTest {
         SistemaService sistemaService = new SistemaService(voos);
 
         List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(origem);
+        assertEquals(voosDisponiveis, voos);
         assertFalse(voosDisponiveis.isEmpty());
         assertEquals(voosDisponiveis.size(), 1);
         assertTrue(voosDisponiveis.contains(voo01));
@@ -95,6 +94,36 @@ public class SistemaReservaDeVooServiceTest {
         SistemaService sistemaService = new SistemaService(voos);
 
         List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(origem);
+        assertTrue(voosDisponiveis.isEmpty());
+    }
+
+    @Test
+    public void testaBuscaDeVoosPorFiltroDataExistente() {
+        String data = LocalDate.now().toString();
+        criarVoo(voo01);
+        criarVoo(voo02);
+        voo02.setData(LocalDate.now().minusDays(2));
+
+        List<Voo> voos = List.of(voo01);
+        SistemaService sistemaService = new SistemaService(voos);
+
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(data);
+        assertEquals(voosDisponiveis, voos);
+        assertFalse(voosDisponiveis.isEmpty());
+        assertEquals(voosDisponiveis.size(), 1);
+        assertTrue(voosDisponiveis.contains(voo01));
+        assertFalse(voosDisponiveis.contains(voo02));
+    }
+
+    @Test
+    public void testaBuscaDeVoosPorFiltroDataInexistente() {
+        String data = LocalDate.now().minusDays(2).toString();
+        criarVoo(voo01);
+
+        List<Voo> voos = List.of(voo01);
+        SistemaService sistemaService = new SistemaService(voos);
+
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(data);
         assertTrue(voosDisponiveis.isEmpty());
     }
 
