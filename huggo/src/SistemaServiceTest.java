@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -162,7 +163,16 @@ public class SistemaServiceTest {
         assertEquals(vooRetornado, voo01);
     }
 
-    // Todo testar comportamento com lista vazia
+    @Test
+    public void testaSelecionarVooInexistente() {
+        SistemaService sistemaService = new SistemaService(new ArrayList<>());
+
+        String message = assertThrows(NoSuchElementException.class, () -> {
+            sistemaService.buscaVooPorId(voo01.getId());
+        }).getMessage();
+
+        assertEquals("No value present", message);
+    }
 
     private void criarVoo(Voo voo) {
         voo.setData(LocalDate.now());
