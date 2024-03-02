@@ -6,12 +6,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class SistemaReservaDeVooServiceTest {
+public class SistemaServiceTest {
 
     private Voo voo01;
     private Voo voo02;
@@ -60,7 +59,7 @@ public class SistemaReservaDeVooServiceTest {
     public void testaBuscaDeVoosPorFiltroComListaVazia() {
         String filtro = "Campina Grande - PB";
         SistemaService sistemaService = new SistemaService(new ArrayList<>());
-        assertTrue(sistemaService.buscarVoosByFiltro(filtro).isEmpty());
+        assertTrue(sistemaService.buscarVoosPorFiltro(filtro).isEmpty());
     }
 
     @Test
@@ -71,7 +70,7 @@ public class SistemaReservaDeVooServiceTest {
         List<Voo> voos = List.of(voo01);
         SistemaService sistemaService = new SistemaService(voos);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(origem);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origem);
         assertEquals(voosDisponiveis, voos);
         assertFalse(voosDisponiveis.isEmpty());
         assertEquals(voosDisponiveis.size(), 1);
@@ -87,7 +86,7 @@ public class SistemaReservaDeVooServiceTest {
         List<Voo> voos = List.of(voo01);
         SistemaService sistemaService = new SistemaService(voos);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(origem);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origem);
         assertTrue(voosDisponiveis.isEmpty());
     }
 
@@ -101,7 +100,7 @@ public class SistemaReservaDeVooServiceTest {
         List<Voo> voos = List.of(voo01);
         SistemaService sistemaService = new SistemaService(voos);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(data);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(data);
         assertEquals(voosDisponiveis, voos);
         assertFalse(voosDisponiveis.isEmpty());
         assertEquals(voosDisponiveis.size(), 1);
@@ -117,7 +116,7 @@ public class SistemaReservaDeVooServiceTest {
         List<Voo> voos = List.of(voo01);
         SistemaService sistemaService = new SistemaService(voos);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(data);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(data);
         assertNotEquals(voosDisponiveis, voos);
         assertTrue(voosDisponiveis.isEmpty());
     }
@@ -130,7 +129,7 @@ public class SistemaReservaDeVooServiceTest {
         List<Voo> voos = List.of(voo01);
         SistemaService sistemaService = new SistemaService(voos);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(numeroAssentos);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(numeroAssentos);
         assertEquals(voosDisponiveis, voos);
         assertFalse(voosDisponiveis.isEmpty());
         assertEquals(voosDisponiveis.size(), 1);
@@ -146,9 +145,22 @@ public class SistemaReservaDeVooServiceTest {
         List<Voo> voos = List.of(voo01);
         SistemaService sistemaService = new SistemaService(voos);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosByFiltro(numeroAssentos);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(numeroAssentos);
         assertNotEquals(voosDisponiveis, voos);
         assertTrue(voosDisponiveis.isEmpty());
+    }
+
+    @Test
+    public void testaSelecionarVoo() {
+        criarVoo(voo01);
+        criarVoo(voo02);
+
+        List<Voo> voos = List.of(voo01);
+        SistemaService sistemaService = new SistemaService(voos);
+
+        Voo vooRetornado = sistemaService.buscaVooPorId(voo01.getId());
+        System.err.println(vooRetornado.detalhesVoo());
+        assertEquals(vooRetornado, voo01);
     }
 
     private void criarVoo(Voo voo) {

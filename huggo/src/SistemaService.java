@@ -1,5 +1,5 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class SistemaService {
 
@@ -13,9 +13,13 @@ public class SistemaService {
         return voosDisponiveis;
     }
 
-    public List<Voo> buscarVoosByFiltro(String filtro) {
+    public List<Voo> buscarVoosPorFiltro(String filtro) {
         return this.getVoosDisponiveis().stream()
                 .filter(voo -> voo.detalhesVoo().contains(filtro))
                 .toList();
+    }
+
+    public Voo buscaVooPorId(UUID id) {
+        return new Voo();
     }
 }
