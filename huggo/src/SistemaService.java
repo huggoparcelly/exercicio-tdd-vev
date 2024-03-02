@@ -3,10 +3,17 @@ import java.util.List;
 
 public class SistemaService {
 
-    private static List<Voo> voosDisponiveis = new ArrayList<>();
+    private List<Voo> voosDisponiveis;
 
-    public static List<Voo> getVoosDisponiveis() {
+    public SistemaService(List<Voo> voosDisponiveis) {
+        this.voosDisponiveis = voosDisponiveis;
+    }
+
+    public List<Voo> getVoosDisponiveis() {
         return voosDisponiveis;
     }
 
+    public void setVoosDisponiveis(List<Voo> voosDisponiveis) {
+        this.voosDisponiveis = voosDisponiveis;
+    }
 }

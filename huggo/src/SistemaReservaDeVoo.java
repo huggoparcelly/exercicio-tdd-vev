@@ -1,6 +1,4 @@
-import java.util.List;
-
-public class Sistema {
+public class SistemaReservaDeVoo {
     public static void main(String[] args) {
 
     }
