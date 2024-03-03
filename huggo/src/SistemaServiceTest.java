@@ -430,12 +430,13 @@ public class SistemaServiceTest {
         Reserva reserva = sistemaService.reservarVoo(voo01.getId(), NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO);
 
         String detalhesVooEsperados = reserva.getVoo().detalhesVoo();
+        BigDecimal precoTotal = getPrecoTotal(reserva);
         String informacoesPassageiro = "  Nome: " + reserva.getNome() + "\n" +
                 "  CPF: " + reserva.getCpf() + "\n" +
                 "  Contato: " + reserva.getContato();
 
         String confirmacaoEsperada = detalhesVooEsperados + "\n" +
-                "Preço Total: R$ \n" +
+                "Preço Total: R$ "+ precoTotal + "\n" +
                 "Informações Passageiro: " + "\n" + informacoesPassageiro;
 
         String confirmacao = sistemaService.confirmarReservaPorId(reserva.getIdReserva());
@@ -483,5 +484,12 @@ public class SistemaServiceTest {
 
     private Reserva criarReserva(Voo voo) {
         return new Reserva(NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO, voo);
+    }
+
+    private BigDecimal getPrecoTotal(Reserva reserva) {
+        Integer quantidadePassageiros = reserva.getQuantidadePassageiros();
+        BigDecimal valorPassagem = reserva.getVoo().getValor();
+
+        return  BigDecimal.valueOf(quantidadePassageiros).multiply(valorPassagem);
     }
 }

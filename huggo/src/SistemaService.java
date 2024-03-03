@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -63,13 +64,21 @@ public class SistemaService {
     public String confirmarReservaPorId(UUID idReserva) throws Exception {
         Reserva reserva = buscaReserva(idReserva);
         String detalhesDoVoo = reserva.getVoo().detalhesVoo();
+        BigDecimal precoTotal = getPrecoTotal(reserva);
         String informacoesPassageiro = "  Nome: " + reserva.getNome() + "\n" +
                 "  CPF: " + reserva.getCpf() + "\n" +
                 "  Contato: " + reserva.getContato();
 
         return detalhesDoVoo + "\n" +
-                "Preço Total: R$ \n" +
+                "Preço Total: R$ " + precoTotal + "\n" +
                 "Informações Passageiro: " + "\n" + informacoesPassageiro;
+    }
+
+    private BigDecimal getPrecoTotal(Reserva reserva) {
+        Integer quantidadePassageiros = reserva.getQuantidadePassageiros();
+        BigDecimal valorPassagem = reserva.getVoo().getValor();
+
+        return  BigDecimal.valueOf(quantidadePassageiros).multiply(valorPassagem);
     }
 
     private Reserva buscaReserva(UUID id) throws Exception {
