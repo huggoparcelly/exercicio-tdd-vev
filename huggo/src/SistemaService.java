@@ -63,10 +63,13 @@ public class SistemaService {
     public String confirmarReservaPorId(UUID idReserva) throws Exception {
         Reserva reserva = buscaReserva(idReserva);
         String detalhesDoVoo = reserva.getVoo().detalhesVoo();
+        String informacoesPassageiro = "  Nome: " + reserva.getNome() + "\n" +
+                "  CPF: " + reserva.getCpf() + "\n" +
+                "  Contato: " + reserva.getContato();
 
-        return "Voo: " + detalhesDoVoo + "\n" +
+        return detalhesDoVoo + "\n" +
                 "Preço Total: R$ \n" +
-                "Informações Passageiro: ";
+                "Informações Passageiro: " + "\n" + informacoesPassageiro;
     }
 
     private Reserva buscaReserva(UUID id) throws Exception {

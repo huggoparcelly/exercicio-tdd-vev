@@ -430,21 +430,37 @@ public class SistemaServiceTest {
         Reserva reserva = sistemaService.reservarVoo(voo01.getId(), NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO);
 
         String detalhesVooEsperados = reserva.getVoo().detalhesVoo();
-        String confirmacaoEsperada = "Voo: " + detalhesVooEsperados + "\n" +
+        String informacoesPassageiro = "  Nome: " + reserva.getNome() + "\n" +
+                "  CPF: " + reserva.getCpf() + "\n" +
+                "  Contato: " + reserva.getContato();
+
+        String confirmacaoEsperada = detalhesVooEsperados + "\n" +
                 "Preço Total: R$ \n" +
-                "Informações Passageiro: ";
+                "Informações Passageiro: " + "\n" + informacoesPassageiro;
 
         String confirmacao = sistemaService.confirmarReservaPorId(reserva.getIdReserva());
 
         assertEquals(confirmacaoEsperada, confirmacao);
     }
 
+    @Test
+    public void testeConfirmarReservarComIdInexistente() throws Exception {
+        SistemaService sistemaService = adicionaVooDisponivel(voo01);
+
+        Reserva reserva = sistemaService.reservarVoo(voo01.getId(), NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO);
+        Reserva reservaInexistente = criarReserva(voo02);
+
+        String menssagemEsperada = "Reserva não encontrada";
+        String menssagem = assertThrows(Exception.class, () -> {
+            sistemaService.confirmarReservaPorId(reservaInexistente.getIdReserva());
+        }).getMessage();
+
+        assertNotEquals(reservaInexistente, reserva);
+        assertEquals(menssagemEsperada , menssagem);
+    }
+
     /*
      TODO
-        confimação de reserva por id com lista vazia
-        confimação de reserva por id da reserva
-        confimação de reserva por id inexistente
-
         Refatorar metodo e testes buscarVoosPorFiltro
      */
 

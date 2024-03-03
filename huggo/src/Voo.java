@@ -82,7 +82,7 @@ public class Voo {
     return "Voo " + id +
             "\nData: " + data + ",\n" +
             "Horario Saida: " + horarioSaida + ",\n" +
-            "Horario Chegada: " + horarioChegada +
+            "Horario Chegada: " + horarioChegada + ",\n" +
             "Valor: " + valor + ",\n" +
             "Origem: " + origem + '\'' + ",\n" +
             "Destino: " + destino + '\'' + ",\n" +
