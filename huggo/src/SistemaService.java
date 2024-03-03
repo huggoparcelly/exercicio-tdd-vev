@@ -30,6 +30,12 @@ public class SistemaService {
 
     public Reserva reservarVoo(UUID vooId, String nome, Integer quantidadePassageiros, String contato) throws Exception {
         Voo voo = this.buscaVooPorId(vooId);
+        if(nome.isBlank() || contato.isBlank()) {
+            throw new Exception("Informações pessoais inválidas");
+        }
+        if(quantidadePassageiros <= 0 || quantidadePassageiros > voo.getAssentosDisponiveis()) {
+            throw new Exception("Quantidade de passageiros inválida");
+        }
         return new Reserva(nome, quantidadePassageiros, contato, voo);
     }
 }

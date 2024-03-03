@@ -53,14 +53,4 @@ public class Reserva {
         this.voo = voo;
     }
 
-    @Override
-    public String toString() {
-        return "Reserva{" +
-                "idReserva=" + idReserva +
-                ", nome='" + nome + '\'' +
-                ", quantidadePassageiros=" + quantidadePassageiros +
-                ", contato='" + contato + '\'' +
-                ", voo=" + voo +
-                '}';
-    }
 }
