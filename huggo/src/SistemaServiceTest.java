@@ -197,7 +197,7 @@ public class SistemaServiceTest {
         // Mocks
         SistemaService sistemaService = adicionaVooDisponivel(voo01);
 
-        Reserva reservaEsperada = getReserva();
+        Reserva reservaEsperada = criarReserva(voo01);
 
         // Test
         Reserva reserva = sistemaService.reservarVoo(voo01.getId(), NOME, CPF,
@@ -316,7 +316,7 @@ public class SistemaServiceTest {
         SistemaService sistemaService = adicionaVooDisponivel(voo01);
 
         //Test
-        Reserva reserva = getReserva();
+        Reserva reserva = criarReserva(voo01);
         String menssagemEsperada = "Reserva não encontrada";
 
         String message = assertThrows(Exception.class, () -> {
@@ -374,7 +374,7 @@ public class SistemaServiceTest {
         SistemaService sistemaService = adicionaVooDisponivel(voo01);
 
         //Test
-        Reserva reserva = getReserva();
+        Reserva reserva = criarReserva(voo01);
         String menssagemEsperada = "Reserva não encontrada";
 
         String message = assertThrows(Exception.class, () -> {
@@ -413,8 +413,24 @@ public class SistemaServiceTest {
     @Test
     public void testaConfirmarReservaSemReservasCadastradas() {
         SistemaService sistemaService = new SistemaService();
-        Reserva reserva = getReserva();
-        String confirmacaoEsperada = "Voo: \n" +
+        Reserva reserva = criarReserva(voo01);
+
+        String menssagemEsperada = "Reserva não encontrada";
+
+        String menssagem = assertThrows(Exception.class, () -> {
+            sistemaService.confirmarReservaPorId(reserva.getIdReserva());
+        }).getMessage();
+
+        assertEquals(menssagemEsperada , menssagem);
+    }
+
+    @Test
+    public void testeConfirmarReservar() throws Exception {
+        SistemaService sistemaService = adicionaVooDisponivel(voo01);
+        Reserva reserva = sistemaService.reservarVoo(voo01.getId(), NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO);
+
+        String detalhesVooEsperados = reserva.getVoo().detalhesVoo();
+        String confirmacaoEsperada = "Voo: " + detalhesVooEsperados + "\n" +
                 "Preço Total: R$ \n" +
                 "Informações Passageiro: ";
 
@@ -449,7 +465,7 @@ public class SistemaServiceTest {
         return sistemaService;
     }
 
-    private Reserva getReserva() {
-        return new Reserva(NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO, voo01);
+    private Reserva criarReserva(Voo voo) {
+        return new Reserva(NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO, voo);
     }
 }
