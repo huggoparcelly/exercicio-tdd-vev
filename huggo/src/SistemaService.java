@@ -60,6 +60,12 @@ public class SistemaService {
         return "Reserva cancelada com sucesso";
     }
 
+    public String confirmarReservaPorId(UUID idReserva) {
+        return "Voo: \n" +
+                "Preço Total: R$ \n" +
+                "Informações Passageiro: ";
+    }
+
     private Reserva buscaReserva(UUID id) throws Exception {
         return this.reservas.stream()
                 .filter(r -> r.getIdReserva().equals(id))

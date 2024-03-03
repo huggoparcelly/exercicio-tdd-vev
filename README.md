@@ -88,7 +88,7 @@ Os usuários devem ser capazes de selecionar um voo e reservá-lo, inserindo det
 - [X] Criar método ```reservarVoo```
 
 Os usuários devem poder cancelar uma reserva de voo, fornecendo o código de reserva ou identificação pessoal.
-- [ ] Criar método de ```cancelamento de reserva``` feito pelo ```código``` ou ```identificação pessoal``` 
+- [X] Criar método de ```cancelamento de reserva``` feito pelo ```código``` ou ```identificação pessoal``` 
 
 O sistema deve gerar uma confirmação de reserva contendo detalhes do voo, preço total e informações do passageiro.
 - [ ] Criar método de ```confirmação de reserva``` com detalhes de
