@@ -97,5 +97,3 @@ O sistema deve gerar uma confirmação de reserva contendo detalhes do voo, pre�
     preço total,
     informações do passageiro
 ```
-
-- [ ] Criar iteração para usuário ```selecionar e reservar``` um voo disponível
