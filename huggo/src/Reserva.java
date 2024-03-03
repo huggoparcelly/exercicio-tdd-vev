@@ -4,14 +4,15 @@ public class Reserva {
 
     private UUID idReserva;
     private String nome;
+    private String cpf;
     private Integer quantidadePassageiros;
     private String contato;
-
     private Voo voo;
 
-    public Reserva(String nome, Integer quantidadePassageiros, String contato, Voo voo) {
+    public Reserva(String nome,String cpf, Integer quantidadePassageiros, String contato, Voo voo) {
         this.idReserva = UUID.randomUUID();
         this.nome = nome;
+        this.cpf = cpf;
         this.quantidadePassageiros = quantidadePassageiros;
         this.contato = contato;
         this.voo = voo;
@@ -27,6 +28,14 @@ public class Reserva {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Integer getQuantidadePassageiros() {
