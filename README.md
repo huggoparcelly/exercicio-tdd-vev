@@ -76,7 +76,6 @@ O sistema deve exibir uma lista de voos disponíveis com informações detalhada
 ```
 
 Os usuários devem ser capazes de selecionar um voo e reservá-lo, inserindo detalhes como nome, número de passageiros e informações de contato.
-- [ ] Criar iteração para usuário ```selecionar e reservar``` um voo disponível
 
 - [X] Criar entidade ```Reserva``` com atributos
 ```
@@ -98,3 +97,5 @@ O sistema deve gerar uma confirmação de reserva contendo detalhes do voo, pre�
     preço total,
     informações do passageiro
 ```
+
+- [ ] Criar iteração para usuário ```selecionar e reservar``` um voo disponível

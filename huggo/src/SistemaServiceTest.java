@@ -296,6 +296,40 @@ public class SistemaServiceTest {
 
     }
 
+    @Test
+    public void testaCancelamentoDeVooPorId() throws Exception {
+        // Mock
+        criarVoo(voo01);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
+        String nome = "João da Silva";
+        Integer quantidadePassageiros = 1;
+        String contato = "+55123456789";
+        sistemaService.reservarVoo(voo01.getId(), nome, quantidadePassageiros, contato);
+        String menssagemEsperada = "Voo cancelado com sucesso";
+
+        //Test
+        String menssagem = sistemaService.cancelarVoo(voo01.getId());
+        assertEquals(menssagem, menssagemEsperada);
+
+    }
+
+    /*
+     TODO
+        cancelamento por infoPessoal com lista vazia
+        cancelamento por id com lista vazia
+        cancelamento por id de reserva, com voo inexistente
+        cancelamento por infoPessoal de reserva, com voo inexistente
+        cancelamento por id de reserva, com reserva inexistente
+        cancelamento por infoPessoal de reserva, com reserva inexistente
+        confimação de reserva por id com lista vazia
+        confimação de reserva por id da reserva
+        confimação de reserva por id inexistente
+
+        Refatorar metodo e testes buscarVoosPorFiltro
+     */
+
+
 
     private void criarVoo(Voo voo) {
         voo.setData(LocalDate.now());

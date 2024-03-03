@@ -40,6 +40,16 @@ public class SistemaService {
         if(quantidadePassageiros <= 0 || quantidadePassageiros > voo.getAssentosDisponiveis()) {
             throw new Exception("Quantidade de passageiros inválida");
         }
-        return new Reserva(nome, quantidadePassageiros, contato, voo);
+        Reserva reserva = new Reserva(nome, quantidadePassageiros, contato, voo);
+        this.reservas.add(reserva);
+        return reserva;
+    }
+
+    public String cancelarVoo(UUID id) {
+        return "Voo cancelado com sucesso";
+    }
+
+    public void cancelarVoo(String informacaoPessoal) {
+
     }
 }
