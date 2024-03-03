@@ -152,7 +152,7 @@ public class SistemaServiceTest {
     }
 
     @Test
-    public void testaSelecionarVoo() {
+    public void testaSelecionarVoo() throws Exception {
         criarVoo(voo01);
         criarVoo(voo02);
 
@@ -164,14 +164,29 @@ public class SistemaServiceTest {
     }
 
     @Test
-    public void testaSelecionarVooInexistente() {
+    public void testaSelecionarVooInexistenteSemVoos() {
         SistemaService sistemaService = new SistemaService(new ArrayList<>());
 
-        String message = assertThrows(NoSuchElementException.class, () -> {
+        String message = assertThrows(Exception.class, () -> {
             sistemaService.buscaVooPorId(voo01.getId());
         }).getMessage();
 
-        assertEquals("No value present", message);
+        assertEquals("Voo não encontrado", message);
+    }
+
+    @Test
+    public void testaSelecionarVooInexistenteComUmVoo() {
+        criarVoo(voo01);
+        criarVoo(voo02);
+
+        List<Voo> voos = List.of(voo01);
+        SistemaService sistemaService = new SistemaService(voos);
+
+        String message = assertThrows(Exception.class, () -> {
+            sistemaService.buscaVooPorId(voo02.getId());
+        }).getMessage();
+
+        assertEquals("Voo não encontrado", message);
     }
 
     private void criarVoo(Voo voo) {

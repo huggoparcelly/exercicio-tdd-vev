@@ -21,10 +21,10 @@ public class SistemaService {
                 .toList();
     }
 
-    public Voo buscaVooPorId(UUID id) {
+    public Voo buscaVooPorId(UUID id) throws Exception {
          return this.voosDisponiveis.stream()
                  .filter(v -> v.getId().equals(id))
                  .findFirst()
-                 .orElseThrow();
+                 .orElseThrow(() -> new Exception("Voo não encontrado"));
     }
 }
