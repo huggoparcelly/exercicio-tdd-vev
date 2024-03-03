@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -7,8 +8,11 @@ public class SistemaService {
 
     private List<Voo> voosDisponiveis;
 
-    public SistemaService(List<Voo> voosDisponiveis) {
-        this.voosDisponiveis = voosDisponiveis;
+    private List<Reserva> reservas;
+
+    public SistemaService() {
+        this.voosDisponiveis = new ArrayList<>();
+        this.reservas = new ArrayList<>();
     }
 
     public List<Voo> getVoosDisponiveis() {

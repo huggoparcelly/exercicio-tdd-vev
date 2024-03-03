@@ -26,7 +26,7 @@ public class SistemaServiceTest {
 
     @Test
     public void testaListaVoosDisponiveisVazia() {
-        SistemaService sistemaService = new SistemaService(new ArrayList<>());
+        SistemaService sistemaService = new SistemaService();
         List<Voo> listaVooDisponiveis = sistemaService.getVoosDisponiveis();
         assertTrue(listaVooDisponiveis.isEmpty());
     }
@@ -34,7 +34,8 @@ public class SistemaServiceTest {
     @Test
     public void testaListaVoosDisponiveisPopulada() {
         List<Voo> voos = List.of(voo01, voo02, voo03);
-        SistemaService sistemaService = new SistemaService(voos);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().addAll(voos);
 
         List<Voo> voosDispononiveis = sistemaService.getVoosDisponiveis();
         assertEquals(voosDispononiveis.size(), 3);
@@ -47,7 +48,8 @@ public class SistemaServiceTest {
         criarVoo(voo03);
 
         List<Voo> voos = List.of(voo01, voo02, voo03);
-        SistemaService sistemaService = new SistemaService(voos);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().addAll(voos);
 
         List<Voo> voosDispononiveis = sistemaService.getVoosDisponiveis();
 
@@ -59,7 +61,7 @@ public class SistemaServiceTest {
     @Test
     public void testaBuscaDeVoosPorFiltroComListaVazia() {
         String filtro = "Campina Grande - PB";
-        SistemaService sistemaService = new SistemaService(new ArrayList<>());
+        SistemaService sistemaService = new SistemaService();
         assertTrue(sistemaService.buscarVoosPorFiltro(filtro).isEmpty());
     }
 
@@ -67,9 +69,10 @@ public class SistemaServiceTest {
     public void testaBuscaDeVoosPorFiltroOrigemExistente() {
         String origem = "Origem: Campina Grande - PB";
         criarVoo(voo01);
-
         List<Voo> voos = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voos);
+
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
 
         List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origem);
         assertEquals(voosDisponiveis, voos);
@@ -84,8 +87,8 @@ public class SistemaServiceTest {
         String origem = "Origem: Cidade Grande";
         criarVoo(voo01);
 
-        List<Voo> voos = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voos);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
 
         List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origem);
         assertTrue(voosDisponiveis.isEmpty());
@@ -97,9 +100,10 @@ public class SistemaServiceTest {
         criarVoo(voo01);
         criarVoo(voo02);
         voo02.setData(LocalDate.now().minusDays(2));
-
         List<Voo> voos = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voos);
+
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
 
         List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(data);
         assertEquals(voosDisponiveis, voos);
@@ -113,9 +117,10 @@ public class SistemaServiceTest {
     public void testaBuscaDeVoosPorFiltroDataInexistente() {
         String data = "Data: " + LocalDate.now().minusDays(2);
         criarVoo(voo01);
-
         List<Voo> voos = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voos);
+
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
 
         List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(data);
         assertNotEquals(voosDisponiveis, voos);
@@ -126,9 +131,10 @@ public class SistemaServiceTest {
     public void testaBuscaDeVoosPorFiltroNumeroAssentosExistente() {
         String numeroAssentos = "Assentos Disponiveis: 10";
         criarVoo(voo01);
-
         List<Voo> voos = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voos);
+
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
 
         List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(numeroAssentos);
         assertEquals(voosDisponiveis, voos);
@@ -142,9 +148,10 @@ public class SistemaServiceTest {
     public void testaBuscaDeVoosPorFiltroNumeroAssentosInexistente() {
         String numeroAssentos = "Assentos Disponiveis: 5";
         criarVoo(voo01);
-
         List<Voo> voos = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voos);
+
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
 
         List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(numeroAssentos);
         assertNotEquals(voosDisponiveis, voos);
@@ -156,8 +163,8 @@ public class SistemaServiceTest {
         criarVoo(voo01);
         criarVoo(voo02);
 
-        List<Voo> voos = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voos);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
 
         Voo vooRetornado = sistemaService.buscaVooPorId(voo01.getId());
         assertEquals(vooRetornado, voo01);
@@ -165,7 +172,7 @@ public class SistemaServiceTest {
 
     @Test
     public void testaSelecionarVooInexistenteSemVoos() {
-        SistemaService sistemaService = new SistemaService(new ArrayList<>());
+        SistemaService sistemaService = new SistemaService();
 
         String message = assertThrows(Exception.class, () -> {
             sistemaService.buscaVooPorId(voo01.getId());
@@ -179,8 +186,8 @@ public class SistemaServiceTest {
         criarVoo(voo01);
         criarVoo(voo02);
 
-        List<Voo> voos = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voos);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
 
         String message = assertThrows(Exception.class, () -> {
             sistemaService.buscaVooPorId(voo02.getId());
@@ -193,8 +200,8 @@ public class SistemaServiceTest {
     public void testaCriacaoDaReserva() throws Exception {
         // Mocks
         criarVoo(voo01);
-        List<Voo> voosDisponiveis = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voosDisponiveis);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
         String nome = "João da Silva";
         Integer quantidadePassageiros = 1;
         String contato = "+55123456789";
@@ -214,8 +221,8 @@ public class SistemaServiceTest {
     public void testaCriacaoDaReservaComNomeInvalido() throws Exception {
         // Mocks
         criarVoo(voo01);
-        List<Voo> voosDisponiveis = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voosDisponiveis);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
         String nome = "";
         Integer quantidadePassageiros = 1;
         String contato = "+55123456789";
@@ -234,8 +241,8 @@ public class SistemaServiceTest {
     public void testaCriacaoDaReservaComQuantidadePasseigosNegativo() {
         // Mocks
         criarVoo(voo01);
-        List<Voo> voosDisponiveis = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voosDisponiveis);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
         String nome = "João da Silva";
         Integer quantidadePassageiros = -1;
         String contato = "+55123456789";
@@ -253,8 +260,8 @@ public class SistemaServiceTest {
     public void testaCriacaoDaReservaComQuantidadePasseigosMaiorQueCapacidade() throws Exception {
         // Mocks
         criarVoo(voo01);
-        List<Voo> voosDisponiveis = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voosDisponiveis);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
         String nome = "João da Silva";
         Integer quantidadePassageiros = 100;
         String contato = "+55123456789";
@@ -273,8 +280,8 @@ public class SistemaServiceTest {
     public void testaCriacaoDaReservaComContatoInvalido() {
         // Mocks
         criarVoo(voo01);
-        List<Voo> voosDisponiveis = List.of(voo01);
-        SistemaService sistemaService = new SistemaService(voosDisponiveis);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
         String nome = "João da Silva";
         Integer quantidadePassageiros = 1;
         String contato = "";
@@ -288,6 +295,7 @@ public class SistemaServiceTest {
         assertEquals("Informações pessoais inválidas", message);
 
     }
+
 
     private void criarVoo(Voo voo) {
         voo.setData(LocalDate.now());
