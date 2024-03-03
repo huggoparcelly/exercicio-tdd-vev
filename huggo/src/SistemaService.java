@@ -27,4 +27,9 @@ public class SistemaService {
                  .findFirst()
                  .orElseThrow(() -> new Exception("Voo não encontrado"));
     }
+
+    public Reserva reservarVoo(UUID vooId, String nome, Integer quantidadePassageiros, String contato) throws Exception {
+        Voo voo = this.buscaVooPorId(vooId);
+        return new Reserva(nome, quantidadePassageiros, contato, voo);
+    }
 }

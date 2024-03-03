@@ -189,6 +189,26 @@ public class SistemaServiceTest {
         assertEquals("Voo não encontrado", message);
     }
 
+    @Test
+    public void testaCriacaoDaReserva() throws Exception {
+        // Mocks
+        criarVoo(voo01);
+        List<Voo> voosDisponiveis = List.of(voo01);
+        SistemaService sistemaService = new SistemaService(voosDisponiveis);
+        String nome = "João da Silva";
+        Integer quantidadePassageiros = 1;
+        String contato = "+55123456789";
+        Reserva reservaEsperada = new Reserva(nome, quantidadePassageiros, contato, voo01);
+        // Test
+        Reserva reserva = sistemaService.reservarVoo(voo01.getId(), nome,
+                                                quantidadePassageiros, contato);
+
+        assertEquals(reserva.getNome(), reservaEsperada.getNome());
+        assertEquals(reserva.getQuantidadePassageiros(), reservaEsperada.getQuantidadePassageiros());
+        assertEquals(reserva.getContato(), reservaEsperada.getContato());
+
+    }
+
     private void criarVoo(Voo voo) {
         voo.setData(LocalDate.now());
         voo.setOrigem("Campina Grande - PB");
