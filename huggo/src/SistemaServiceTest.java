@@ -4,9 +4,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -297,7 +295,7 @@ public class SistemaServiceTest {
     }
 
     @Test
-    public void testaCancelamentoDeVooPorId() throws Exception {
+    public void testaCancelamentoDeReservaPorId() throws Exception {
         // Mock
         criarVoo(voo01);
         SistemaService sistemaService = new SistemaService();
@@ -306,12 +304,11 @@ public class SistemaServiceTest {
         Integer quantidadePassageiros = 1;
         String contato = "+55123456789";
         sistemaService.reservarVoo(voo01.getId(), nome, quantidadePassageiros, contato);
-        String menssagemEsperada = "Voo cancelado com sucesso";
+        String menssagemEsperada = "Reserva cancelado com sucesso";
 
         //Test
-        String menssagem = sistemaService.cancelarVoo(voo01.getId());
+        String menssagem = sistemaService.cancelarReserva(voo01.getId());
         assertEquals(menssagem, menssagemEsperada);
-
     }
 
     /*
