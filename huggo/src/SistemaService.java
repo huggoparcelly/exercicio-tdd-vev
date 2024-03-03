@@ -46,10 +46,11 @@ public class SistemaService {
     public String cancelarReserva(UUID id) throws Exception {
         Voo voo = this.buscaVooPorId(id);
         reservas.remove(voo);
-        return "Reserva cancelado com sucesso";
+        return "Reserva cancelada com sucesso";
     }
 
-    public void cancelarReserva(String informacaoPessoal) {
+    public String cancelarReserva(String informacaoPessoal) {
 
+        return "Reserva cancelada com sucesso";
     }
 }
