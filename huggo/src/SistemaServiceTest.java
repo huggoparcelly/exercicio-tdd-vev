@@ -172,11 +172,12 @@ public class SistemaServiceTest {
     public void testaSelecionarVooInexistenteSemVoos() {
         SistemaService sistemaService = new SistemaService();
 
+        String menssagemEsperada = "Voo não encontrado";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.buscaVooPorId(voo01.getId());
         }).getMessage();
 
-        assertEquals("Voo não encontrado", message);
+        assertEquals(menssagemEsperada, message);
     }
 
     @Test
@@ -187,11 +188,12 @@ public class SistemaServiceTest {
         SistemaService sistemaService = new SistemaService();
         sistemaService.getVoosDisponiveis().add(voo01);
 
+        String menssagemEsperada = "Voo não encontrado";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.buscaVooPorId(voo02.getId());
         }).getMessage();
 
-        assertEquals("Voo não encontrado", message);
+        assertEquals(menssagemEsperada, message);
     }
 
     @Test
@@ -226,12 +228,13 @@ public class SistemaServiceTest {
         String contato = "+55123456789";
 
         // Test
+        String menssagemEsperada = "Informações pessoais inválidas";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.reservarVoo(voo01.getId(), nome,
                     quantidadePassageiros, contato);
         }).getMessage();
 
-        assertEquals("Informações pessoais inválidas", message);
+        assertEquals(menssagemEsperada, message);
 
     }
 
@@ -246,12 +249,13 @@ public class SistemaServiceTest {
         String contato = "+55123456789";
 
         // Test
+        String menssagemEsperada = "Quantidade de passageiros inválida";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.reservarVoo(voo01.getId(), nome,
                     quantidadePassageiros, contato);
         }).getMessage();
 
-        assertEquals("Quantidade de passageiros inválida", message);
+        assertEquals(menssagemEsperada, message);
     }
 
     @Test
@@ -265,12 +269,13 @@ public class SistemaServiceTest {
         String contato = "+55123456789";
 
         // Test
+        String menssagemEsperada = "Quantidade de passageiros inválida";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.reservarVoo(voo01.getId(), nome,
                     quantidadePassageiros, contato);
         }).getMessage();
 
-        assertEquals("Quantidade de passageiros inválida", message);
+        assertEquals(menssagemEsperada, message);
 
     }
 
@@ -285,12 +290,13 @@ public class SistemaServiceTest {
         String contato = "";
 
         // Test
+        String menssagemEsperada = "Informações pessoais inválidas";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.reservarVoo(voo01.getId(), nome,
                     quantidadePassageiros, contato);
         }).getMessage();
 
-        assertEquals("Informações pessoais inválidas", message);
+        assertEquals(menssagemEsperada, message);
 
     }
 
@@ -317,6 +323,30 @@ public class SistemaServiceTest {
     }
 
     @Test
+    public void testaCancelamentoDeReservaPorIdComListaReservasVazia() throws Exception {
+        // Mock
+        criarVoo(voo01);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo01);
+        String nome = "João da Silva";
+        Integer quantidadePassageiros = 1;
+        String contato = "+55123456789";
+
+        //Test
+        Reserva reserva = new Reserva(nome, quantidadePassageiros, contato, voo01);
+        String menssagemEsperada = "Reserva não encontrada";
+
+        String message = assertThrows(Exception.class, () -> {
+            sistemaService.cancelarReserva(reserva.getIdReserva());
+        }).getMessage();
+        assertEquals(menssagemEsperada, message);
+
+        List<Reserva> reservas = sistemaService.getReservas();
+        assertFalse(reservas.contains(reserva));
+        assertTrue(reservas.isEmpty());
+    }
+
+    @Test
     public void testaCancelamentoDeReservaPorNome() throws Exception {
         // Mock
         criarVoo(voo01);
@@ -326,19 +356,19 @@ public class SistemaServiceTest {
         Integer quantidadePassageiros = 1;
         String contato = "+55123456789";
         Reserva reserva = sistemaService.reservarVoo(voo01.getId(), nome, quantidadePassageiros, contato);
-        String menssagemEsperada = "Reserva cancelada com sucesso";
 
         //Test
+        String menssagemEsperada = "Reserva cancelada com sucesso";
         String menssagem = sistemaService.cancelarReserva(nome);
         List<Reserva> reservas = sistemaService.getReservas();
-        assertEquals(menssagem, menssagemEsperada);
+        assertEquals(menssagemEsperada, menssagem);
         assertTrue(reservas.contains(reserva));
     }
 
     /*
      TODO
         cancelamento por infoPessoal com lista vazia
-        cancelamento por id com lista vazia
+
         cancelamento por id de reserva, com voo inexistente
         cancelamento por infoPessoal de reserva, com voo inexistente
         cancelamento por id de reserva, com reserva inexistente

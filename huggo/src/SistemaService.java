@@ -57,7 +57,7 @@ public class SistemaService {
         return this.reservas.stream()
                 .filter(r -> r.getIdReserva().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Voo não encontrado"));
+                .orElseThrow(() -> new Exception("Reserva não encontrada"));
     }
 
     public String cancelarReserva(String informacaoPessoal) {
