@@ -17,6 +17,10 @@ public class SistemaService {
         return voosDisponiveis;
     }
 
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
     public List<Voo> buscarVoosPorFiltro(String filtro) {
         return this.getVoosDisponiveis().stream()
                 .filter(voo -> voo.detalhesVoo().contains(filtro))
@@ -44,9 +48,16 @@ public class SistemaService {
     }
 
     public String cancelarReserva(UUID id) throws Exception {
-        Voo voo = this.buscaVooPorId(id);
-        reservas.remove(voo);
+        Reserva reserva = this.buscaReservaPorId(id);
+        reservas.remove(reserva);
         return "Reserva cancelada com sucesso";
+    }
+
+    private Reserva buscaReservaPorId(UUID id) throws Exception {
+        return this.reservas.stream()
+                .filter(r -> r.getIdReserva().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Voo não encontrado"));
     }
 
     public String cancelarReserva(String informacaoPessoal) {

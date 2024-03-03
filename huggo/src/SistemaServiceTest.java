@@ -303,12 +303,17 @@ public class SistemaServiceTest {
         String nome = "João da Silva";
         Integer quantidadePassageiros = 1;
         String contato = "+55123456789";
-        sistemaService.reservarVoo(voo01.getId(), nome, quantidadePassageiros, contato);
-        String menssagemEsperada = "Reserva cancelada com sucesso";
 
         //Test
-        String menssagem = sistemaService.cancelarReserva(voo01.getId());
+        Reserva reserva = sistemaService.reservarVoo(voo01.getId(), nome, quantidadePassageiros, contato);
+        String menssagemEsperada = "Reserva cancelada com sucesso";
+
+        String menssagem = sistemaService.cancelarReserva(reserva.getIdReserva());
         assertEquals(menssagem, menssagemEsperada);
+
+        List<Reserva> reservas = sistemaService.getReservas();
+        assertFalse(reservas.contains(reserva));
+        assertTrue(reservas.isEmpty());
     }
 
     @Test
@@ -320,12 +325,14 @@ public class SistemaServiceTest {
         String nome = "João da Silva";
         Integer quantidadePassageiros = 1;
         String contato = "+55123456789";
-        sistemaService.reservarVoo(voo01.getId(), nome, quantidadePassageiros, contato);
+        Reserva reserva = sistemaService.reservarVoo(voo01.getId(), nome, quantidadePassageiros, contato);
         String menssagemEsperada = "Reserva cancelada com sucesso";
 
         //Test
         String menssagem = sistemaService.cancelarReserva(nome);
+        List<Reserva> reservas = sistemaService.getReservas();
         assertEquals(menssagem, menssagemEsperada);
+        assertTrue(reservas.contains(reserva));
     }
 
     /*
