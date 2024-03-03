@@ -88,10 +88,7 @@ public class SistemaServiceTest {
     @Test
     public void testaBuscaDeVoosPorFiltroOrigemInexistente() {
         String origem = "Origem: Cidade Grande";
-        criarVoo(voo01);
-
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo01);
 
         List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origem);
         assertTrue(voosDisponiveis.isEmpty());
@@ -164,10 +161,7 @@ public class SistemaServiceTest {
     @Test
     public void testaSelecionarVoo() throws Exception {
         criarVoo(voo01);
-        criarVoo(voo02);
-
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo02);
 
         Voo vooRetornado = sistemaService.buscaVooPorId(voo01.getId());
         assertEquals(vooRetornado, voo01);
@@ -188,10 +182,7 @@ public class SistemaServiceTest {
     @Test
     public void testaSelecionarVooInexistenteComUmVoo() {
         criarVoo(voo01);
-        criarVoo(voo02);
-
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo02);
 
         String menssagemEsperada = "Voo não encontrado";
         String message = assertThrows(Exception.class, () -> {
@@ -204,9 +195,7 @@ public class SistemaServiceTest {
     @Test
     public void testaCriacaoDaReserva() throws Exception {
         // Mocks
-        criarVoo(voo01);
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo01);
 
         Reserva reservaEsperada = new Reserva(NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO, voo01);
 
@@ -223,9 +212,7 @@ public class SistemaServiceTest {
     @Test
     public void testaCriacaoDaReservaComNomeInvalido() throws Exception {
         // Mocks
-        criarVoo(voo01);
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo01);
         String nomeVazio = "";
 
         // Test
@@ -241,9 +228,7 @@ public class SistemaServiceTest {
     @Test
     public void testaCriacaoDaReservaComQuantidadePasseigosNegativo() {
         // Mocks
-        criarVoo(voo01);
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo01);
         Integer quantidadePassageiros = -1;
 
         // Test
@@ -259,9 +244,7 @@ public class SistemaServiceTest {
     @Test
     public void testaCriacaoDaReservaComQuantidadePasseigosMaiorQueCapacidade() throws Exception {
         // Mocks
-        criarVoo(voo01);
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo01);
         Integer quantidadePassageiros = 100;
 
         // Test
@@ -278,9 +261,7 @@ public class SistemaServiceTest {
     @Test
     public void testaCriacaoDaReservaComContatoInvalido() {
         // Mocks
-        criarVoo(voo01);
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo01);
         String contato = "";
 
         // Test
@@ -297,9 +278,7 @@ public class SistemaServiceTest {
     @Test
     public void testaCriacaoDaReservaComCPFInvalido() {
         // Mocks
-        criarVoo(voo01);
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo01);
         String cpf = "";
 
         // Test
@@ -316,9 +295,7 @@ public class SistemaServiceTest {
     @Test
     public void testaCancelamentoDeReservaPorId() throws Exception {
         // Mock
-        criarVoo(voo01);
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo01);
 
         //Test
         Reserva reserva = sistemaService.reservarVoo(voo01.getId(), NOME, CPF,
@@ -336,9 +313,7 @@ public class SistemaServiceTest {
     @Test
     public void testaCancelamentoDeReservaPorIdComListaReservasVazia() {
         // Mock
-        criarVoo(voo01);
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo01);
 
         //Test
         Reserva reserva = new Reserva(NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO, voo01);
@@ -357,9 +332,7 @@ public class SistemaServiceTest {
     @Test
     public void testaCancelamentoDeReservaPorIdInexistenteComListaReservasPopulada() throws Exception {
         // Mock
-        criarVoo(voo01);
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
+        SistemaService sistemaService = getSistemaService(voo01);
 
         //Test
         Reserva reserva = sistemaService.reservarVoo(voo01.getId(), NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO);
@@ -379,12 +352,9 @@ public class SistemaServiceTest {
     }
 
     @Test
-    public void testaCancelamentoDeReservaPorNome() throws Exception {
+    public void testaCancelamentoDeReservaPorCpf() throws Exception {
         // Mock
-        criarVoo(voo01);
-        SistemaService sistemaService = new SistemaService();
-        sistemaService.getVoosDisponiveis().add(voo01);
-        String nome = "João da Silva";
+        SistemaService sistemaService = getSistemaService(voo01);
         Reserva reserva = sistemaService.reservarVoo(voo01.getId(), NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO);
 
         //Test
@@ -394,6 +364,25 @@ public class SistemaServiceTest {
 
         List<Reserva> reservas = sistemaService.getReservas();
         assertFalse(reservas.contains(reserva));
+    }
+
+    @Test
+    public void testaCancelamentoDeReservaPorCpfComListaReservasVazia() throws Exception {
+        // Mock
+        SistemaService sistemaService = getSistemaService(voo01);
+
+        //Test
+        Reserva reserva = new Reserva(NOME, CPF, QUANTIDADE_PASSAGEIROS, CONTATO, voo01);
+        String menssagemEsperada = "Reserva não encontrada";
+
+        String message = assertThrows(Exception.class, () -> {
+            sistemaService.cancelarReserva(CPF);
+        }).getMessage();
+        assertEquals(menssagemEsperada, message);
+
+        List<Reserva> reservas = sistemaService.getReservas();
+        assertFalse(reservas.contains(reserva));
+        assertTrue(reservas.isEmpty());
     }
 
     /*
@@ -408,8 +397,6 @@ public class SistemaServiceTest {
         Refatorar metodo e testes buscarVoosPorFiltro
      */
 
-
-
     private void criarVoo(Voo voo) {
         voo.setData(LocalDate.now());
         voo.setOrigem("Campina Grande - PB");
@@ -418,5 +405,12 @@ public class SistemaServiceTest {
         voo.setHorarioChegada(LocalTime.now().plusHours(2L));
         voo.setValor(BigDecimal.valueOf(350.30));
         voo.setAssentosDisponiveis(10);
+    }
+
+    private SistemaService getSistemaService(Voo voo) {
+        criarVoo(voo);
+        SistemaService sistemaService = new SistemaService();
+        sistemaService.getVoosDisponiveis().add(voo);
+        return sistemaService;
     }
 }
