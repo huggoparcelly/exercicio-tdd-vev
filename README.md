@@ -4,7 +4,7 @@
 Deve-se implementar um processador de boletos. O objetivo desse processador é verificar todos os boletos e, caso o valor da soma de todos os boletos seja maior que o valor da fatura, então essa fatura deverá ser considerada como paga.
 
 Uma fatura contém data, valor total e nome do cliente.
-- [ ] Criar entidade ```Fatura``` com atributos: 
+- [X] Criar entidade ```Fatura``` com atributos: 
 ```
     data;
     valor total;
@@ -12,7 +12,7 @@ Uma fatura contém data, valor total e nome do cliente.
 ```
 
 Um boleto contém o código do boleto, data, e valor pago.
-- [ ] Criar entidade ```Boleto``` com atributos
+- [X] Criar entidade ```Boleto``` com atributos
 ```
     código do boleto; 
     data;
@@ -22,9 +22,9 @@ Um boleto contém o código do boleto, data, e valor pago.
 O processador de boletos, ao receber uma lista de boletos, deve então, 
 para cada boleto, criar um ```pagamento``` associado a essa ```fatura```. 
 Esse pagamento contém o valor pago, a data, e o tipo do pagamento efetuado (que nesse caso é "BOLETO").
-- [ ] Criar método ```processador de boletos```, que tem como parâmetro uma lista de boletos.
-- [ ] Iterar sobre a lista de boletos e criar um ```Pagamento``` para cada elemento.
-- [ ] Criar entidade ```Pagamento``` com atributos
+- [X] Criar método ```processador de boletos```, que tem como parâmetro uma lista de boletos.
+- [X] Iterar sobre a lista de boletos e criar um ```Pagamento``` para cada elemento.
+- [X] Criar entidade ```Pagamento``` com atributos
 ```
     valor pago;
     data;
@@ -32,8 +32,8 @@ Esse pagamento contém o valor pago, a data, e o tipo do pagamento efetuado (que
 ```
 
 Como dito anteriormente, caso a soma de todos os boletos seja igual ou ultrapasse o valor da fatura, a mesma deve ser marcada como "PAGA".
-- [ ] Verificar se a soma dos ```boletos``` é igual ou maior que a ```fatura```
-- [ ] Marcar fatura como ```Paga```
+- [X] Verificar se a soma dos ```boletos``` é igual ou maior que a ```fatura```
+- [X] Marcar fatura como ```Paga```
 
 ```
     Exemplo: Fatura de 1.500,00 com 3 boletos no valor de 500,00, 400,00 e 600,00: 
