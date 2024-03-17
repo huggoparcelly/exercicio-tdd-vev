@@ -5,6 +5,58 @@ import java.util.List;
 import org.junit.Test;
 
 public class TestesFuncionais{
+    @SuppressWarnings("deprecation")
+    @Test
+    //CT-PB-01: criação de pagamento - todos os dados validados
+    public void testCriaPagamento(){
+        Pagamento pagamento = new Pagamento(100.00, "17/03/2024", "boleto");
+        assertEquals(pagamento.getType(), "boleto");
+        assertEquals(100.00, pagamento.getValuePaid(), 0.00);
+    }
+
+    @Test
+    //CT-PB-02: criação de pagamento - todos os dados validados
+    public void testCriaPagamentos(){
+        Boleto boleto1 = new Boleto(2, "17/03/2024", 100.00);
+        Pagamento pagamento1 = new Pagamento(20.00, "17/03/2024", "boleto");
+        Boleto boleto2 = new Boleto(2, "17/03/2024", 200.00);
+        Pagamento pagamento2 = new Pagamento(200.00, "17/03/2024", "boleto");
+        assertEquals(pagamento1.getType(), "boleto");
+        assertEquals(100.00, pagamento1.getValuePaid(), 0.00);
+        assertEquals(pagamento2.getType(), "boleto");
+        assertEquals(200.00, pagamento2.getValuePaid(), 0.00);
+    }
+
+    @Test
+    //CT-PB-03: criação de pagamento - boleto com valor vazio
+    public void testCriaBoletoValorVazio(){
+        Boleto boleto = new Boleto(2, "17/03/2024", null);     
+        assertNotNull(boleto.getTotalPaid());
+    }
+
+    @Test
+    //CT-PB-04: criação de pagamento - boleto com código vazio
+    public void testCriaBoletoCodeVazio(){
+        Boleto boleto = new Boleto(null, "17/03/2024", 20.00);     
+        assertNotNull(boleto.getBoletoCode());       
+    }
+
+    @Test
+    //CT-PB-05: criação de pagamento - boleto com data vazia
+    public void testCriaBoletoDataVazio(){
+        Boleto boleto = new Boleto(3, null, 20.00);     
+        assertNotNull(boleto.getDate());       
+    }
+
+    @Test
+    //CT-PB-06: criação de pagamento - boleto com dados vazios
+    public void testCriaBoletoDadosVazios(){
+        Boleto boleto = new Boleto(null, null, null);     
+        assertNotNull(boleto.getBoletoCode());    
+        assertNotNull(boleto.getDate());   
+        assertNotNull(boleto.getTotalPaid());    
+    }
+
     @Test
     //CT-PB-07: soma dos boletos igual ao valor da fatura
     public void testFaturaPaga() {
@@ -65,13 +117,4 @@ public class TestesFuncionais{
         assertTrue(fatura.isPaid());
         assertEquals(3, fatura.getPayments().size());
     }
-
-
-
-
-
-
-
-
-
 }
