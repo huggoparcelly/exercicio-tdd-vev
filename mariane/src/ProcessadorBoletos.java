@@ -2,9 +2,11 @@ import java.util.List;
 
 public class ProcessadorBoletos {
 
+
     public void processarBoletos(Fatura fatura, List<Boleto> boletos) {
         double totalPaid = 0;
- 
+        
+         
         for(Boleto boleto : boletos){
             totalPaid += boleto.getTotalPaid();
         }
