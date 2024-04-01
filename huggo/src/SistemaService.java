@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,10 +23,33 @@ public class SistemaService {
         return reservas;
     }
 
-    public List<Voo> buscarVoosPorFiltro(String filtro) {
+    public List<Voo> buscarVoosPorFiltro(String origin, String destiny, LocalDate date, Integer passengers) throws Exception {
+        validaOrigemDestino(origin, destiny);
+        validaAno(date);
+        validaPassageiros(passengers);
+
         return this.getVoosDisponiveis().stream()
-                .filter(voo -> voo.detalhesVoo().contains(filtro))
+                .filter(voo -> voo.getOrigem().equals(origin) && voo.getDestino().equals(destiny) && voo.getData().equals(date) &&
+                        (voo.getAssentosDisponiveis() > passengers || voo.getAssentosDisponiveis().equals(passengers) ))
                 .toList();
+    }
+
+    private static void validaOrigemDestino(String origin, String destiny) throws Exception {
+        if(origin.isBlank() || origin.length() != 3 || destiny.isBlank() || destiny.length() != 3 ) {
+            throw new Exception("Informação de origem ou destino inválida");
+        }
+    }
+
+    private static void validaPassageiros(Integer passengers) throws Exception {
+        if(passengers > 10 || passengers < 1) {
+            throw new Exception("Número de passageiros inválido");
+        }
+    }
+
+    private static void validaAno(LocalDate date) throws Exception {
+        if(date.getYear() < LocalDate.now().getYear() || date.getYear() > LocalDate.now().getYear() + 1) {
+            throw new Exception("Ano informado inválido");
+        }
     }
 
     public Voo buscaVooPorId(UUID id) throws Exception {
@@ -38,15 +62,24 @@ public class SistemaService {
     public Reserva reservarVoo(UUID vooId, String nome, String cpf,
                                Integer quantidadePassageiros, String contato) throws Exception {
         Voo voo = this.buscaVooPorId(vooId);
-        if(nome.isBlank() || contato.isBlank() || cpf.isBlank()) {
-            throw new Exception("Informações pessoais inválidas");
-        }
-        if(quantidadePassageiros <= 0 || quantidadePassageiros > voo.getAssentosDisponiveis()) {
-            throw new Exception("Quantidade de passageiros inválida");
-        }
+        validaInfoPassageiro(nome, cpf, contato);
+        validaAssentos(quantidadePassageiros, voo);
+
         Reserva reserva = new Reserva(nome, cpf, quantidadePassageiros, contato, voo);
         this.reservas.add(reserva);
         return reserva;
+    }
+
+    private static void validaAssentos(Integer quantidadePassageiros, Voo voo) throws Exception {
+        if(quantidadePassageiros <= 0 || quantidadePassageiros > voo.getAssentosDisponiveis()) {
+            throw new Exception("Quantidade de passageiros inválida");
+        }
+    }
+
+    private static void validaInfoPassageiro(String nome, String cpf, String contato) throws Exception {
+        if(nome.isBlank() || contato.isBlank() || cpf.isBlank() || cpf.length() != 11) {
+            throw new Exception("Informações pessoais inválidas");
+        }
     }
 
     public String cancelarReserva(UUID id) throws Exception {

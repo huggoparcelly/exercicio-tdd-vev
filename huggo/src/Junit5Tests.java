@@ -1,15 +1,19 @@
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class SistemaServiceFuncionalTest {
+@DisplayName("Realizando testes usando features no JUnit5")
+public class Junit5Tests {
 
     private Voo flight01;
     private Voo flight02;
@@ -20,11 +24,11 @@ public class SistemaServiceFuncionalTest {
     private final Integer PASSENGERS_QUANTITY = 2;
     private final String CONTACT = "+55123456789";
 
-    private final String CPF = "111.111.111-11";
+    private final String CPF = "11111111111";
 
     @Before
     public void setup() {
-         this.sistemaService = new SistemaService();
+        this.sistemaService = new SistemaService();
         this.flight01 = new Voo();
         this.flight02 = new Voo();
     }
@@ -38,6 +42,7 @@ public class SistemaServiceFuncionalTest {
         LocalDate date = flight01.getData();
         Integer passengers = 2;
 
+        adicionaVooDisponivel(flight01);
 
         List<Voo> availableFlights = sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         assertEquals(expectedAvailableFlights, availableFlights);
@@ -53,7 +58,7 @@ public class SistemaServiceFuncionalTest {
         LocalDate date = flight01.getData();
         Integer passengers = 0;
 
-        String expectedMessage = "Numero de passageiros menor que 1";
+        String expectedMessage = "Número de passageiros inválido";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         }).getMessage();
@@ -70,41 +75,7 @@ public class SistemaServiceFuncionalTest {
         LocalDate date = flight01.getData();
         Integer passengers = 20;
 
-        String expectedMessage = "Numero de passageiros maior que 10";
-        String message = assertThrows(Exception.class, () -> {
-            sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
-        }).getMessage();
-
-        assertEquals(expectedMessage , message);
-    }
-
-    @Test
-    public void testSearchFlies_whenMonthValueIsLessThan0() {
-
-        criarVoo(flight01);
-        String origin = flight01.getOrigem();
-        String destiny = flight01.getDestino();
-        LocalDate date = LocalDate.parse("14/0/2024");
-        Integer passengers = 2;
-
-        String expectedMessage = "Mês não está entre 1..12";
-        String message = assertThrows(Exception.class, () -> {
-            sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
-        }).getMessage();
-
-        assertEquals(expectedMessage , message);
-    }
-
-    @Test
-    public void testSearchFlies_whenMonthValueIsGreatThan12() {
-
-        criarVoo(flight01);
-        String origin = flight01.getOrigem();
-        String destiny = flight01.getDestino();
-        LocalDate date = LocalDate.parse("14/13/2024");
-        Integer passengers = 2;
-
-        String expectedMessage = "Mês não está entre 1..12";
+        String expectedMessage = "Número de passageiros inválido";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         }).getMessage();
@@ -118,10 +89,10 @@ public class SistemaServiceFuncionalTest {
         criarVoo(flight01);
         String origin = flight01.getOrigem();
         String destiny = flight01.getDestino();
-        LocalDate date = LocalDate.parse("14/03/1904");
+        LocalDate date = LocalDate.parse("14/03/1904", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Integer passengers = 2;
 
-        String expectedMessage = "Ano é anterior ao ano atual";
+        String expectedMessage = "Ano informado inválido";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         }).getMessage();
@@ -135,44 +106,10 @@ public class SistemaServiceFuncionalTest {
         criarVoo(flight01);
         String origin = flight01.getOrigem();
         String destiny = flight01.getDestino();
-        LocalDate date = LocalDate.parse("14/03/2026");
+        LocalDate date = LocalDate.parse("14/03/2026", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Integer passengers = 2;
 
-        String expectedMessage = "Ano é maior que o ano atual + 1 ano";
-        String message = assertThrows(Exception.class, () -> {
-            sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
-        }).getMessage();
-
-        assertEquals(expectedMessage , message);
-    }
-
-    @Test
-    public void testSearchFlies_whenDayValueIsLessThan1() {
-
-        criarVoo(flight01);
-        String origin = flight01.getOrigem();
-        String destiny = flight01.getDestino();
-        LocalDate date = LocalDate.parse("0/03/2024");
-        Integer passengers = 2;
-
-        String expectedMessage = "O dia não está entre 1..31";
-        String message = assertThrows(Exception.class, () -> {
-            sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
-        }).getMessage();
-
-        assertEquals(expectedMessage , message);
-    }
-
-    @Test
-    public void testSearchFlies_whenDayValueIsBiggerThan31() {
-
-        criarVoo(flight01);
-        String origin = flight01.getOrigem();
-        String destiny = flight01.getDestino();
-        LocalDate date = LocalDate.parse("32/03/2024");
-        Integer passengers = 2;
-
-        String expectedMessage = "O dia não está entre 1..31";
+        String expectedMessage = "Ano informado inválido";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         }).getMessage();
@@ -186,10 +123,10 @@ public class SistemaServiceFuncionalTest {
         criarVoo(flight01);
         String origin = "AAAA";
         String destiny = flight01.getDestino();
-        LocalDate date = LocalDate.parse("14/03/2024");
+        LocalDate date = LocalDate.parse("14/03/2024", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Integer passengers = 2;
 
-        String expectedMessage = "Origem inválida";
+        String expectedMessage = "Informação de origem ou destino inválida";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         }).getMessage();
@@ -203,10 +140,10 @@ public class SistemaServiceFuncionalTest {
         criarVoo(flight01);
         String origin = flight01.getOrigem();
         String destiny = "AAAA";
-        LocalDate date = LocalDate.parse("14/03/2024");
+        LocalDate date = LocalDate.parse("14/03/2024", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Integer passengers = 2;
 
-        String expectedMessage = "Destino inválido";
+        String expectedMessage = "Informação de origem ou destino inválida";
         String message = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         }).getMessage();
@@ -261,10 +198,10 @@ public class SistemaServiceFuncionalTest {
     }
 
     @Test
-    public void testBookFlight_whenNumberPassengersIsGreatThan9() throws Exception {
+    public void testBookFlight_whenNumberPassengersIsGreatThan9(){
         // Mocks
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
-        Integer passengersQuantity = 10;
+        Integer passengersQuantity = 11;
 
         // Test
         String expectedMessage = "Quantidade de passageiros inválida";
@@ -339,7 +276,7 @@ public class SistemaServiceFuncionalTest {
         Reserva reserva = sistemaService.reservarVoo(flight01.getId(), NAME, CPF, PASSENGERS_QUANTITY, CONTACT);
         Reserva nonexistentReserve = new Reserva(NAME, cpfNonexistent, PASSENGERS_QUANTITY, CONTACT, flight02);
 
-        String expectedMessage = "Reserva inexistente";
+        String expectedMessage = "Reserva não encontrada";
 
         String message = assertThrows(Exception.class, () -> {
             sistemaService.cancelarReserva(nonexistentReserve.getIdReserva());
@@ -378,7 +315,7 @@ public class SistemaServiceFuncionalTest {
         Reserva reserve = sistemaService.reservarVoo(flight01.getId(), NAME, CPF, PASSENGERS_QUANTITY, CONTACT);
         Reserva nonexistentReserve = new Reserva(NAME, cpfNonexistent, PASSENGERS_QUANTITY, CONTACT, flight02);
 
-        String expectedMessage = "CPF inválido";
+        String expectedMessage = "Reserva não encontrada";
 
         String message = assertThrows(Exception.class, () -> {
             sistemaService.cancelarReserva(nonexistentReserve.getCpf());

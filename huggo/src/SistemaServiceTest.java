@@ -62,22 +62,31 @@ public class SistemaServiceTest {
     }
 
     @Test
-    public void testaBuscaDeVoosPorFiltroComListaVazia() {
-        String filtro = "Campina Grande - PB";
+    public void testaBuscaDeVoosPorFiltroComListaVazia() throws Exception {
+        criarVoo(voo01);
+        String origin = voo01.getOrigem();
+        String destiny = voo01.getDestino();
+        LocalDate date = LocalDate.parse("14/03/1904");
+        Integer passengers = 2;
+
         SistemaService sistemaService = new SistemaService();
-        assertTrue(sistemaService.buscarVoosPorFiltro(filtro).isEmpty());
+        assertTrue(sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers).isEmpty());
     }
 
     @Test
-    public void testaBuscaDeVoosPorFiltroOrigemExistente() {
+    public void testaBuscaDeVoosPorFiltroOrigemExistente() throws Exception {
         String origem = "Origem: Campina Grande - PB";
         criarVoo(voo01);
         List<Voo> voos = List.of(voo01);
+        String origin = voo01.getOrigem();
+        String destiny = voo01.getDestino();
+        LocalDate date = LocalDate.parse("14/03/1904");
+        Integer passengers = 2;
 
         SistemaService sistemaService = new SistemaService();
         sistemaService.getVoosDisponiveis().add(voo01);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origem);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         assertEquals(voosDisponiveis, voos);
         assertFalse(voosDisponiveis.isEmpty());
         assertEquals(voosDisponiveis.size(), 1);
@@ -86,26 +95,32 @@ public class SistemaServiceTest {
     }
 
     @Test
-    public void testaBuscaDeVoosPorFiltroOrigemInexistente() {
-        String origem = "Origem: Cidade Grande";
+    public void testaBuscaDeVoosPorFiltroOrigemInexistente() throws Exception {
+        String origin = "AAA";
+        String destiny = voo01.getDestino();
+        LocalDate date = LocalDate.parse("14/03/1904");
+        Integer passengers = 2;
         SistemaService sistemaService = adicionaVooDisponivel(voo01);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origem);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         assertTrue(voosDisponiveis.isEmpty());
     }
 
     @Test
-    public void testaBuscaDeVoosPorFiltroDataExistente() {
-        String data = "Data: " + LocalDate.now();
+    public void testaBuscaDeVoosPorFiltroDataExistente() throws Exception {
         criarVoo(voo01);
         criarVoo(voo02);
         voo02.setData(LocalDate.now().minusDays(2));
         List<Voo> voos = List.of(voo01);
+        String origin = voo01.getOrigem();
+        String destiny = voo01.getDestino();
+        LocalDate date = voo01.getData();
+        Integer passengers = 2;
 
         SistemaService sistemaService = new SistemaService();
         sistemaService.getVoosDisponiveis().add(voo01);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(data);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         assertEquals(voosDisponiveis, voos);
         assertFalse(voosDisponiveis.isEmpty());
         assertEquals(voosDisponiveis.size(), 1);
@@ -114,29 +129,37 @@ public class SistemaServiceTest {
     }
 
     @Test
-    public void testaBuscaDeVoosPorFiltroDataInexistente() {
-        String data = "Data: " + LocalDate.now().minusDays(2);
+    public void testaBuscaDeVoosPorFiltroDataInexistente() throws Exception {
         criarVoo(voo01);
         List<Voo> voos = List.of(voo01);
+
+        String origin = voo01.getOrigem();
+        String destiny = voo01.getDestino();
+        LocalDate date = LocalDate.now().minusDays(2);
+        Integer passengers = 2;
 
         SistemaService sistemaService = new SistemaService();
         sistemaService.getVoosDisponiveis().add(voo01);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(data);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         assertNotEquals(voosDisponiveis, voos);
         assertTrue(voosDisponiveis.isEmpty());
     }
 
     @Test
-    public void testaBuscaDeVoosPorFiltroNumeroAssentosExistente() {
-        String numeroAssentos = "Assentos Disponiveis: 10";
+    public void testaBuscaDeVoosPorFiltroNumeroAssentosExistente() throws Exception {
         criarVoo(voo01);
         List<Voo> voos = List.of(voo01);
+
+        String origin = voo01.getOrigem();
+        String destiny = voo01.getDestino();
+        LocalDate date = voo01.getData();
+        Integer passengers = 2;
 
         SistemaService sistemaService = new SistemaService();
         sistemaService.getVoosDisponiveis().add(voo01);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(numeroAssentos);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         assertEquals(voosDisponiveis, voos);
         assertFalse(voosDisponiveis.isEmpty());
         assertEquals(voosDisponiveis.size(), 1);
@@ -145,15 +168,19 @@ public class SistemaServiceTest {
     }
 
     @Test
-    public void testaBuscaDeVoosPorFiltroNumeroAssentosInexistente() {
-        String numeroAssentos = "Assentos Disponiveis: 5";
+    public void testaBuscaDeVoosPorFiltroNumeroAssentosInexistente() throws Exception {
         criarVoo(voo01);
         List<Voo> voos = List.of(voo01);
+
+        String origin = voo01.getOrigem();
+        String destiny = voo01.getDestino();
+        LocalDate date = voo01.getData();
+        Integer passengers = 20;
 
         SistemaService sistemaService = new SistemaService();
         sistemaService.getVoosDisponiveis().add(voo01);
 
-        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(numeroAssentos);
+        List<Voo> voosDisponiveis = sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
         assertNotEquals(voosDisponiveis, voos);
         assertTrue(voosDisponiveis.isEmpty());
     }
@@ -459,11 +486,6 @@ public class SistemaServiceTest {
         assertNotEquals(reservaInexistente, reserva);
         assertEquals(menssagemEsperada , menssagem);
     }
-
-    /*
-     TODO
-        Refatorar metodo e testes buscarVoosPorFiltro
-     */
 
     private void criarVoo(Voo voo) {
         voo.setData(LocalDate.now());
