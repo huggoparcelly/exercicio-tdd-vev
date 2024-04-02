@@ -1,13 +1,12 @@
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SistemaServiceFuncionalTest {
 
@@ -22,7 +21,7 @@ public class SistemaServiceFuncionalTest {
 
     private final String CPF = "111.111.111-11";
 
-    @Before
+    @BeforeEach
     public void setup() {
          this.sistemaService = new SistemaService();
         this.flight01 = new Voo();

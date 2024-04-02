@@ -1,13 +1,12 @@
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SistemaServiceTest {
 
@@ -20,7 +19,7 @@ public class SistemaServiceTest {
     private final String CONTATO = "+55123456789";
     private final String CPF = "111.111.111-11";
 
-    @Before
+    @BeforeEach
     public void setup() {
         voo01 = new Voo();
         voo02 = new Voo();

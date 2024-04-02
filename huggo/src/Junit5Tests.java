@@ -1,6 +1,6 @@
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,9 +8,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Realizando testes usando features no JUnit5")
 public class Junit5Tests {
@@ -26,14 +24,16 @@ public class Junit5Tests {
 
     private final String CPF = "11111111111";
 
-    @Before
+    @BeforeEach
     public void setup() {
         this.sistemaService = new SistemaService();
         this.flight01 = new Voo();
         this.flight02 = new Voo();
     }
 
+
     @Test
+    @DisplayName("Testa a busca por voos, com as informações corretas")
     public void testSearchFlies_whenInformationsAreCorrect() throws Exception {
         List<Voo> expectedAvailableFlights = List.of(flight01);
         criarVoo(flight01);
@@ -50,6 +50,7 @@ public class Junit5Tests {
     }
 
     @Test
+    @DisplayName("Testa a busca por voos, com o número de passageiros menor que 1")
     public void testSearchFlies_whenNumberOfPassengersIsLessThan1() {
 
         criarVoo(flight01);
@@ -59,14 +60,15 @@ public class Junit5Tests {
         Integer passengers = 0;
 
         String expectedMessage = "Número de passageiros inválido";
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
-        }).getMessage();
+        });
 
-        assertEquals(expectedMessage , message);
+        assertEquals(expectedMessage , exception.getMessage());
     }
 
     @Test
+    @DisplayName("Testa a busca por voos, com o número de passageiros mair que 10")
     public void testSearchFlies_whenNumberOfPassengersIsGreatThan10() {
 
         criarVoo(flight01);
@@ -84,6 +86,23 @@ public class Junit5Tests {
     }
 
     @Test
+    @DisplayName("Testa a busca por voos, com a data anterior da atual")
+    public void testSearchFlies_whenDateBeforeActualDay() {
+        criarVoo(flight01);
+        String origin = flight01.getOrigem();
+        String destiny = flight01.getDestino();
+        LocalDate date = LocalDate.now().minusDays(1);
+        Integer passengers = 2;
+        String expectedMessage = "Data anterior a atual";
+        Exception exception = assertThrows(Exception.class, () -> {
+            sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
+        });
+
+        assertEquals(expectedMessage , exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Testa a busca por voos, com o ano anterior ao atual")
     public void testSearchFlies_whenYearValueIsBeforeActualYear() {
 
         criarVoo(flight01);
@@ -93,14 +112,15 @@ public class Junit5Tests {
         Integer passengers = 2;
 
         String expectedMessage = "Ano informado inválido";
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
-        }).getMessage();
+        });
 
-        assertEquals(expectedMessage , message);
+        assertEquals(expectedMessage , exception.getMessage());
     }
 
     @Test
+    @DisplayName("Testa a busca por voos, com o ano após o ano atual")
     public void testSearchFlies_whenYearValueIsAfterActualYearPlusOneYear() {
 
         criarVoo(flight01);
@@ -110,14 +130,15 @@ public class Junit5Tests {
         Integer passengers = 2;
 
         String expectedMessage = "Ano informado inválido";
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
-        }).getMessage();
+        });
 
-        assertEquals(expectedMessage , message);
+        assertEquals(expectedMessage , exception.getMessage());
     }
 
     @Test
+    @DisplayName("Testa a busca por voos, com a origem incorreta")
     public void testSearchFlies_whenOriginIsWrong() {
 
         criarVoo(flight01);
@@ -127,14 +148,15 @@ public class Junit5Tests {
         Integer passengers = 2;
 
         String expectedMessage = "Informação de origem ou destino inválida";
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
-        }).getMessage();
+        });
 
-        assertEquals(expectedMessage , message);
+        assertEquals(expectedMessage , exception.getMessage());
     }
 
     @Test
+    @DisplayName("Testa a busca por voos, com o destino incorreto")
     public void testSearchFlies_whenDestinyIsWrong() {
 
         criarVoo(flight01);
@@ -144,15 +166,16 @@ public class Junit5Tests {
         Integer passengers = 2;
 
         String expectedMessage = "Informação de origem ou destino inválida";
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.buscarVoosPorFiltro(origin, destiny, date, passengers);
-        }).getMessage();
+        });
 
-        assertEquals(expectedMessage , message);
+        assertEquals(expectedMessage , exception.getMessage());
     }
 
 
     @Test
+    @DisplayName("Testa a reserva de voos, com as informações corretas")
     public void testBookFlight_whenInformationAreCorrect() throws Exception {
 
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
@@ -167,93 +190,89 @@ public class Junit5Tests {
     }
 
     @Test
+    @DisplayName("Testa a reserva de voos, com o nome vazio")
     public void testBookFlight_whenWrongName() {
 
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
         String emptyName = "";
 
         String expectedMessage = "Informações pessoais inválidas";
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.reservarVoo(flight01.getId(), emptyName, CPF, PASSENGERS_QUANTITY, CONTACT);
-        }).getMessage();
+        });
 
-        assertEquals(expectedMessage, message);
+        assertEquals(expectedMessage, exception.getMessage());
 
     }
 
     @Test
+    @DisplayName("Testa a reserva de voos, com a quantidade de passageiros menor que 1")
     public void testBookFlight_whenNumberPassengersIsLessThan1() {
-        // Mocks
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
         Integer quantidadePassageiros = 0;
 
-        // Test
         String expectedMessage = "Quantidade de passageiros inválida";
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.reservarVoo(flight01.getId(), NAME, CPF,
                     quantidadePassageiros, CONTACT);
-        }).getMessage();
+        });
 
-        assertEquals(expectedMessage, message);
+        assertEquals(expectedMessage, exception.getMessage());
     }
 
     @Test
-    public void testBookFlight_whenNumberPassengersIsGreatThan9(){
-        // Mocks
+    @DisplayName("Testa a reserva de voos, com a quantidade de passageiros maior que 10")
+    public void testBookFlight_whenNumberPassengersIsGreatThan10(){
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
         Integer passengersQuantity = 11;
 
-        // Test
         String expectedMessage = "Quantidade de passageiros inválida";
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.reservarVoo(flight01.getId(), NAME, CPF,
                     passengersQuantity, CONTACT);
-        }).getMessage();
+        });
 
-        assertEquals(expectedMessage, message);
+        assertEquals(expectedMessage, exception.getMessage());
 
     }
 
     @Test
+    @DisplayName("Testa a reserva de voos, com as informações de contato erradas")
     public void testBookFlight_whenContactValueIsWrong() {
-        // Mocks
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
         String contact = "";
 
-        // Test
         String expectedMessage = "Informações pessoais inválidas";
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.reservarVoo(flight01.getId(), NAME, CPF,
                     PASSENGERS_QUANTITY, contact);
-        }).getMessage();
+        });
 
-        assertEquals(expectedMessage, message);
+        assertEquals(expectedMessage, exception.getMessage());
 
     }
 
     @Test
+    @DisplayName("Testa a reserva de voos, com valor do CPF inválido")
     public void testBookFlight_whenCPFValueIsWrong() {
-        // Mocks
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
         String cpf = "123";
 
-        // Test
         String expectedMessage = "Informações pessoais inválidas";
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.reservarVoo(flight01.getId(), NAME, cpf,
                     PASSENGERS_QUANTITY, CONTACT);
-        }).getMessage();
+        });
 
-        assertEquals(expectedMessage, message);
+        assertEquals(expectedMessage, exception.getMessage());
 
     }
 
     @Test
+    @DisplayName("Testa o cancelamento da reserva pelo id")
     public void testFlightReservationCancellation_byId() throws Exception {
-        // Mock
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
 
-        //Test
         Reserva reserve = sistemaService.reservarVoo(flight01.getId(), NAME, CPF,
                 PASSENGERS_QUANTITY, CONTACT);
         String expectedMessage = "Reserva cancelada com sucesso";
@@ -267,21 +286,20 @@ public class Junit5Tests {
     }
 
     @Test
+    @DisplayName("Testa o cancelamento da reserva com id errado")
     public void testFlightReservationCancellation_byWrongId() throws Exception {
-        // Mock
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
 
-        //Test
         String cpfNonexistent = "222.222.222.-22";
         Reserva reserva = sistemaService.reservarVoo(flight01.getId(), NAME, CPF, PASSENGERS_QUANTITY, CONTACT);
         Reserva nonexistentReserve = new Reserva(NAME, cpfNonexistent, PASSENGERS_QUANTITY, CONTACT, flight02);
 
         String expectedMessage = "Reserva não encontrada";
 
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.cancelarReserva(nonexistentReserve.getIdReserva());
-        }).getMessage();
-        assertEquals(expectedMessage, message);
+        });
+        assertEquals(expectedMessage, exception.getMessage());
 
         List<Reserva> reserves = sistemaService.getReservas();
         assertFalse(reserves.contains(nonexistentReserve));
@@ -290,12 +308,11 @@ public class Junit5Tests {
     }
 
     @Test
+    @DisplayName("Testa o cancelamento da reserva pelo cpf")
     public void testFlightReservationCancellation_byCpf() throws Exception {
-        // Mock
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
         Reserva reserva = sistemaService.reservarVoo(flight01.getId(), NAME, CPF, PASSENGERS_QUANTITY, CONTACT);
 
-        //Test
         String expectedMessage = "Reserva cancelada com sucesso";
         String message = sistemaService.cancelarReserva(CPF);
         assertEquals(expectedMessage, message);
@@ -306,21 +323,20 @@ public class Junit5Tests {
     }
 
     @Test
+    @DisplayName("Testa o cancelamento da reserva com cpf errado")
     public void testFlightReservationCancellation_byWrongCpf() throws Exception {
-        // Mock
         SistemaService sistemaService = adicionaVooDisponivel(flight01);
 
-        //Test
         String cpfNonexistent = "123";
         Reserva reserve = sistemaService.reservarVoo(flight01.getId(), NAME, CPF, PASSENGERS_QUANTITY, CONTACT);
         Reserva nonexistentReserve = new Reserva(NAME, cpfNonexistent, PASSENGERS_QUANTITY, CONTACT, flight02);
 
         String expectedMessage = "Reserva não encontrada";
 
-        String message = assertThrows(Exception.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             sistemaService.cancelarReserva(nonexistentReserve.getCpf());
-        }).getMessage();
-        assertEquals(expectedMessage, message);
+        });
+        assertEquals(expectedMessage, exception.getMessage());
 
         List<Reserva> reserves = sistemaService.getReservas();
         assertFalse(reserves.contains(nonexistentReserve));

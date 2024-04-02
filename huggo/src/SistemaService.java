@@ -25,13 +25,20 @@ public class SistemaService {
 
     public List<Voo> buscarVoosPorFiltro(String origin, String destiny, LocalDate date, Integer passengers) throws Exception {
         validaOrigemDestino(origin, destiny);
-        validaAno(date);
+        validaData(date);
         validaPassageiros(passengers);
 
         return this.getVoosDisponiveis().stream()
                 .filter(voo -> voo.getOrigem().equals(origin) && voo.getDestino().equals(destiny) && voo.getData().equals(date) &&
                         (voo.getAssentosDisponiveis() > passengers || voo.getAssentosDisponiveis().equals(passengers) ))
                 .toList();
+    }
+
+    private static void validaData(LocalDate date) throws Exception {
+        validaAno(date);
+        if(date.isBefore(LocalDate.now())) {
+            throw new Exception("Data anterior a atual");
+        }
     }
 
     private static void validaOrigemDestino(String origin, String destiny) throws Exception {
